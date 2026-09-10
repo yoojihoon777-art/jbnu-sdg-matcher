@@ -1,0 +1,675 @@
+from pathlib import Path
+
+import pandas as pd
+import streamlit as st
+
+from boolean_engine import (
+    Paper,
+    Truth,
+    evaluate_query_file,
+    guide_query_file,
+)
+
+
+SDG_NAMES = {
+    1: "빈곤퇴치",
+    2: "기아종식",
+    3: "건강과 웰빙",
+    4: "양질의 교육",
+    5: "성평등",
+    6: "깨끗한 물과 위생",
+    7: "모두를 위한 깨끗한 에너지",
+    8: "양질의 일자리와 경제성장",
+    9: "산업·혁신·인프라",
+    10: "불평등 감소",
+    11: "지속가능한 도시와 공동체",
+    12: "책임있는 소비와 생산",
+    13: "기후행동",
+    14: "해양생태계 보전",
+    15: "육상생태계 보전",
+    16: "평화·정의·강한 제도",
+}
+
+
+FIELD_LABELS = {
+    "title": "제목",
+    "abstract": "초록",
+    "keywords": "저자키워드",
+    "subject_area": "연구분야",
+}
+
+
+STATUS_LABEL = {
+    Truth.TRUE: "해당",
+    Truth.FALSE: "미해당",
+    Truth.UNKNOWN: "판정 보류",
+}
+
+
+STATUS_ICON = {
+    Truth.TRUE: "✅",
+    Truth.FALSE: "❌",
+    Truth.UNKNOWN: "⚠️",
+}
+
+
+GUIDE_STATUS_ICON = {
+    "충족": "✅",
+    "미충족": "❌",
+    "위치 불일치": "⚠️",
+    "근접조건 미충족": "↔️",
+    "입력 확인 필요": "⚠️",
+    "제외조건": "⛔",
+}
+
+
+def compact_notes(notes):
+    seen = []
+
+    for note in notes:
+        if note not in seen:
+            seen.append(note)
+
+    return seen
+
+
+@st.cache_resource(show_spinner=False)
+def get_query_paths(query_dir: str):
+    base = Path(query_dir)
+
+    return {
+        i: base / f"SDG{i:02d}.txt"
+        for i in range(1, 17)
+    }
+
+
+def run_all_sdgs(paper: Paper, query_dir: str):
+    query_paths = get_query_paths(query_dir)
+
+    results = {}
+
+    for sdg, path in query_paths.items():
+
+        if not path.exists():
+            results[sdg] = {
+                "error": f"검색식 파일 없음: {path.name}",
+                "result": None,
+            }
+
+            continue
+
+        try:
+            result = evaluate_query_file(
+                path,
+                paper,
+            )
+
+            results[sdg] = {
+                "error": None,
+                "result": result,
+            }
+
+        except Exception as exc:
+            results[sdg] = {
+                "error": str(exc),
+                "result": None,
+            }
+
+    return results
+
+
+st.set_page_config(
+    page_title="JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템",
+    page_icon="🌍",
+    layout="wide",
+)
+
+
+st.title(
+    "🌍 JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템"
+)
+
+
+st.caption(
+    "논문 제목·초록·저자키워드를 Elsevier/Scopus SDG Boolean 검색식과 대조하여 "
+    "논문이 어떤 SDG에 해당될 수 있는지 확인합니다."
+)
+query_dir = "queries"
+
+# ============================================================
+# 1. 논문 정보 입력
+# ============================================================
+
+st.subheader(
+    "1. 논문 정보 입력"
+)
+
+
+title = st.text_area(
+    "논문 제목",
+    height=90,
+    placeholder="예: Income inequality and poverty in developing countries",
+)
+
+
+abstract = st.text_area(
+    "초록",
+    height=230,
+    placeholder="논문 초록을 붙여넣으세요.",
+)
+
+
+keyword_count = st.number_input(
+    "저자키워드 개수",
+    min_value=0,
+    max_value=20,
+    value=3,
+    step=1,
+)
+
+keyword_list = []
+
+for i in range(int(keyword_count)):
+    keyword = st.text_input(
+        f"저자키워드 {i + 1}",
+        key=f"author_keyword_{i}",
+        placeholder=f"키워드 {i + 1} 입력",
+    )
+    keyword_list.append(keyword.strip())
+
+keywords_text = "; ".join(
+    keyword for keyword in keyword_list
+    if keyword
+)
+
+
+is_agri = st.checkbox(
+    "농업 관련 학문분야(AGRI)에 해당",
+    help=(
+        "논문의 Scopus 학문분야가 "
+        "AGRI(Agricultural and Biological Sciences)에 해당하면 체크하세요."
+    ),
+)
+
+
+analyze = st.button(
+    "분석 시작",
+    type="primary",
+    use_container_width=True,
+)
+
+
+if analyze:
+
+    if not any(
+        [
+            title.strip(),
+            abstract.strip(),
+            keywords_text,
+        ]
+    ):
+        st.warning(
+            "제목, 초록, 저자키워드 중 하나 이상을 입력해 주세요."
+        )
+
+        st.stop()
+
+
+    paper = Paper(
+        title=title.strip() or None,
+        abstract=abstract.strip() or None,
+        keywords=keywords_text or None,
+        subject_area="AGRI" if is_agri else "OTHER",
+    )
+
+
+    with st.spinner(
+        "SDG 해당 여부를 확인 중입니다..."
+    ):
+        results = run_all_sdgs(
+            paper,
+            query_dir,
+        )
+
+
+    # ========================================================
+    # 2. 분석 결과
+    # ========================================================
+
+    st.subheader(
+        "2. 분석 결과"
+    )
+
+
+    summary_rows = []
+
+
+    for sdg in range(1, 17):
+
+        item = results[sdg]
+
+        result = item["result"]
+
+
+        if item["error"]:
+
+            summary_rows.append(
+                {
+                    "SDG": f"SDG {sdg}",
+                    "목표": SDG_NAMES[sdg],
+                    "판정": "오류",
+                    "근거 수": 0,
+                }
+            )
+
+        else:
+
+            summary_rows.append(
+                {
+                    "SDG": f"SDG {sdg}",
+                    "목표": SDG_NAMES[sdg],
+                    "판정": (
+                        f"{STATUS_ICON[result.truth]} "
+                        f"{STATUS_LABEL[result.truth]}"
+                    ),
+                    "근거 수": len(result.spans),
+                }
+            )
+
+
+    df_summary = pd.DataFrame(
+        summary_rows
+    )
+
+
+    st.dataframe(
+        df_summary,
+        use_container_width=True,
+        hide_index=True,
+    )
+
+
+    true_sdgs = [
+        sdg
+        for sdg, item in results.items()
+        if (
+            item["result"] is not None
+            and item["result"].truth is Truth.TRUE
+        )
+    ]
+
+
+    unknown_sdgs = [
+        sdg
+        for sdg, item in results.items()
+        if (
+            item["result"] is not None
+            and item["result"].truth is Truth.UNKNOWN
+        )
+    ]
+
+
+    if true_sdgs:
+
+        st.success(
+            "검색조건 충족: "
+            + ", ".join(
+                f"SDG {sdg}"
+                for sdg in true_sdgs
+            )
+        )
+
+    else:
+
+        st.info(
+            "현재 입력 기준으로 검색조건을 충족한 SDG가 없습니다."
+        )
+
+
+    if unknown_sdgs:
+
+        st.warning(
+            "일부 입력정보가 없어 판정이 보류된 SDG: "
+            + ", ".join(
+                f"SDG {sdg}"
+                for sdg in unknown_sdgs
+            )
+        )
+
+
+    # ========================================================
+    # 3. SDG별 상세 근거
+    # ========================================================
+
+    st.subheader(
+        "3. SDG별 연구성과 포착 근거"
+    )
+
+
+    for sdg in range(1, 17):
+
+        item = results[sdg]
+
+        result = item["result"]
+
+
+        if item["error"]:
+
+            label = (
+                f"SDG {sdg}. "
+                f"{SDG_NAMES[sdg]} — 오류"
+            )
+
+        else:
+
+            label = (
+                f"SDG {sdg}. "
+                f"{SDG_NAMES[sdg]} — "
+                f"{STATUS_ICON[result.truth]} "
+                f"{STATUS_LABEL[result.truth]}"
+            )
+
+
+        with st.expander(
+            label,
+            expanded=(
+                result is not None
+                and result.truth is Truth.TRUE
+            ),
+        ):
+
+            if item["error"]:
+
+                st.error(
+                    item["error"]
+                )
+
+                continue
+
+
+            st.write(
+                f"**판정 결과:** "
+                f"{STATUS_LABEL[result.truth]}"
+            )
+
+
+            notes = compact_notes(
+                result.notes
+            )
+
+
+            if notes:
+
+                st.write(
+                    "**판정 참고사항**"
+                )
+
+                for note in notes:
+
+                    st.write(
+                        f"- {note}"
+                    )
+
+
+            if result.spans:
+
+                st.write(
+                    "**판정근거**"
+                )
+
+
+                evidence = []
+
+                seen = set()
+
+
+                for span in result.spans:
+
+                    key = (
+                        span.field,
+                        span.query,
+                        span.matched_text,
+                    )
+
+
+                    if key in seen:
+                        continue
+
+
+                    seen.add(
+                        key
+                    )
+
+
+                    evidence.append(
+                        {
+                            "위치": FIELD_LABELS.get(
+                                span.field,
+                                span.field,
+                            ),
+                            "텍스트 조건": span.query,
+                            "포착된 텍스트": span.matched_text,
+                        }
+                    )
+
+
+                    if len(evidence) >= 50:
+                        break
+
+
+                st.dataframe(
+                    pd.DataFrame(
+                        evidence
+                    ),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+
+                if len(result.spans) > 50:
+
+                    st.caption(
+                        f"근거가 많아 처음 50개만 표시했습니다. "
+                        f"전체 근거 수: {len(result.spans)}"
+                    )
+
+
+            else:
+
+                if result.truth is Truth.FALSE:
+
+                    st.caption(
+                        "현재 입력에서 최종 TRUE로 연결되는 "
+                        "검색조건이 발견되지 않았습니다."
+                    )
+
+                elif result.truth is Truth.UNKNOWN:
+
+                    st.caption(
+                        "입력되지 않은 필드가 있어 "
+                        "최종 판정을 확정할 수 없습니다."
+                    )
+
+
+    # ========================================================
+    # 4. SDG 포착 가이드라인
+    # ========================================================
+
+    st.subheader(
+        "4. SDG 포착 가이드라인"
+    )
+
+
+    st.caption(
+        "현재 포착되지 않은 SDG에 대해, 논문과 일부 조건이 일치하는 가장 가까운 검색경로를 최대 3개까지 보여줍니다. 이를 통해 어떤 검색조건이 충족되지 않았는지 확인할 수 있습니다."      
+    )
+
+
+    guide_found = False
+
+
+    for sdg in range(1, 17):
+
+        item = results[sdg]
+
+        result = item["result"]
+
+
+        if item["error"]:
+            continue
+
+
+        if result is None:
+            continue
+
+
+        # 이미 해당되는 SDG는 포착 가이드에서 제외
+        if result.truth is Truth.TRUE:
+            continue
+
+
+        query_path = (
+            Path(query_dir)
+            / f"SDG{sdg:02d}.txt"
+        )
+
+
+        try:
+
+            guide_plans = guide_query_file(
+                query_path,
+                paper,
+                top_k=5,
+            )
+
+        except Exception:
+            continue
+
+
+        # 현재 논문과 하나 이상의 조건이 실제로 겹치는 경우만 표시
+        relevant_plans = [
+            plan
+            for plan in guide_plans
+            if plan.matched_count > 0
+        ][:3]
+
+
+        if not relevant_plans:
+            continue
+
+
+        guide_found = True
+
+
+        with st.expander(
+            f"SDG {sdg}. "
+            f"{SDG_NAMES[sdg]} — "
+            f"가까운 검색조건 보기"
+        ):
+
+
+            for idx, plan in enumerate(
+                relevant_plans,
+                start=1,
+            ):
+
+
+                # IMPORTANT:
+                # 검색식의 *, ?, { }, W/n 등을
+                # Markdown 문법으로 해석하지 않도록
+                # inline code 형식으로 출력
+                st.markdown(
+                    f"**{idx}.** `{plan.label}`"
+                )
+
+
+                satisfied_n = sum(
+                    1
+                    for guide_item in plan.items
+                    if guide_item.status == "충족"
+                )
+
+
+                unresolved_n = sum(
+                    1
+                    for guide_item in plan.items
+                    if guide_item.status != "충족"
+                )
+
+
+                st.caption(
+                    f"현재 충족 {satisfied_n}개 · "
+                    f"확인/미충족 조건 {unresolved_n}개"
+                )
+
+
+                guide_rows = []
+
+
+                for guide_item in plan.items:
+
+                    guide_rows.append(
+                        {
+                            "상태": (
+                                f"{GUIDE_STATUS_ICON.get(guide_item.status, '')} "
+                                f"{guide_item.status}"
+                            ).strip(),
+                            "검색조건": guide_item.query,
+                            "요구 위치": guide_item.field,
+                            "현재 확인": (
+                                guide_item.matched_text
+                                or "-"
+                            ),
+                            "설명": guide_item.message,
+                        }
+                    )
+
+
+                st.dataframe(
+                    pd.DataFrame(
+                        guide_rows
+                    ),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+
+                missing_items = [
+                    guide_item
+                    for guide_item in plan.items
+                    if guide_item.status != "충족"
+                ]
+
+
+                # 미충족 조건이 하나뿐이면
+                # 핵심 사유를 한 줄로 설명
+                if len(missing_items) == 1:
+
+                    missing = missing_items[0]
+
+                    # 검색식에 *가 들어갈 수 있으므로
+                    # Markdown bold 안에 직접 넣지 않고 code 처리
+                    st.info(
+                        "이 검색경로에서는 "
+                        f"`{missing.query}` "
+                        "조건이 충족되지 않아 "
+                        "현재 포착되지 않습니다."
+                    )
+
+
+                st.divider()
+
+
+    if not guide_found:
+
+        st.info(
+            "현재 입력과 부분적으로 일치하는 "
+            "미포착 SDG 검색경로가 없습니다."
+        )
+
+
+    st.caption(
+        "※ 본 도구는 원본 Boolean 검색식 기반의 사전 진단 도구입니다. "
+        "실제 Scopus 색인·언어처리 및 최종 SDG 분류 결과와 "
+        "차이가 있을 수 있습니다."
+    )
