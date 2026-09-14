@@ -231,12 +231,27 @@ st.markdown(
         font-weight: 800 !important;
     }
 
+    /* 사이드바 '메뉴' 헤더 */
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] {
+        background: linear-gradient(
+            90deg,
+            rgba(0, 67, 134, 0.10) 0%,
+            rgba(166, 22, 95, 0.06) 100%
+        ) !important;
+        border: 1px solid #cbd8e8 !important;
+        border-left: 5px solid var(--jbnu-burgundy) !important;
+        border-radius: 10px !important;
+        padding: 0.58rem 0.72rem !important;
+        margin-bottom: 0.55rem !important;
+        box-shadow: 0 4px 12px rgba(0, 67, 134, 0.06);
+    }
+
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
         color: var(--jbnu-blue) !important;
-        font-weight: 800 !important;
+        font-weight: 850 !important;
         font-size: 0.88rem !important;
-        letter-spacing: 0.04em;
-        margin-bottom: 0.35rem !important;
+        letter-spacing: 0.08em;
+        margin: 0 !important;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] {
