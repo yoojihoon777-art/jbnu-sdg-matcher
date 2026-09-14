@@ -107,6 +107,171 @@ st.set_page_config(
     layout="wide",
 )
 
+
+# ============================================================
+# JBNU 디자인 스타일
+# Burgundy: #a6165f / Blue: #004386
+# 기능·문구에는 영향을 주지 않고 화면 스타일만 변경합니다.
+# ============================================================
+
+st.markdown(
+    """
+    <style>
+    :root {
+        --jbnu-burgundy: #a6165f;
+        --jbnu-blue: #004386;
+        --jbnu-blue-soft: rgba(0, 67, 134, 0.07);
+        --jbnu-burgundy-soft: rgba(166, 22, 95, 0.07);
+        --jbnu-border: rgba(0, 67, 134, 0.16);
+    }
+
+    .stApp {
+        background:
+            linear-gradient(180deg, rgba(0, 67, 134, 0.025) 0%, rgba(255,255,255,0) 230px),
+            #ffffff;
+    }
+
+    .block-container {
+        max-width: 1280px;
+        padding-top: 2.2rem;
+        padding-bottom: 4rem;
+    }
+
+    h1 {
+        color: var(--jbnu-blue) !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.035em;
+        padding-bottom: 0.8rem !important;
+        margin-bottom: 1.1rem !important;
+        border-bottom: 3px solid var(--jbnu-blue);
+        position: relative;
+    }
+
+    h1::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 110px;
+        height: 3px;
+        background: var(--jbnu-burgundy);
+    }
+
+    h2 {
+        color: var(--jbnu-blue) !important;
+        font-weight: 750 !important;
+        letter-spacing: -0.025em;
+        border-left: 5px solid var(--jbnu-burgundy);
+        padding-left: 0.75rem !important;
+        margin-top: 2rem !important;
+    }
+
+    h3 {
+        color: var(--jbnu-blue) !important;
+        font-weight: 700 !important;
+    }
+
+    [data-testid="stCaptionContainer"] {
+        color: #5d6874;
+    }
+
+    [data-testid="stSidebar"] {
+        background:
+            linear-gradient(180deg, rgba(0, 67, 134, 0.08) 0%, rgba(166, 22, 95, 0.035) 100%),
+            #fbfcfe;
+        border-right: 1px solid var(--jbnu-border);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label {
+        border-radius: 9px;
+        padding: 0.38rem 0.55rem;
+        transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+        background: var(--jbnu-blue-soft);
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+        accent-color: var(--jbnu-burgundy);
+    }
+
+    .stButton > button {
+        background: var(--jbnu-blue) !important;
+        color: white !important;
+        border: 1px solid var(--jbnu-blue) !important;
+        border-radius: 9px !important;
+        font-weight: 700 !important;
+        min-height: 2.9rem;
+        transition: all 0.15s ease;
+        box-shadow: 0 2px 8px rgba(0, 67, 134, 0.14);
+    }
+
+    .stButton > button:hover {
+        background: var(--jbnu-burgundy) !important;
+        border-color: var(--jbnu-burgundy) !important;
+        box-shadow: 0 4px 12px rgba(166, 22, 95, 0.20);
+        transform: translateY(-1px);
+    }
+
+    div[data-baseweb="input"] > div,
+    div[data-baseweb="textarea"] > div,
+    [data-testid="stNumberInput"] input {
+        border-radius: 8px !important;
+    }
+
+    div[data-baseweb="input"] > div:focus-within,
+    div[data-baseweb="textarea"] > div:focus-within {
+        border-color: var(--jbnu-blue) !important;
+        box-shadow: 0 0 0 1px var(--jbnu-blue) !important;
+    }
+
+    [data-testid="stExpander"] {
+        border: 1px solid var(--jbnu-border) !important;
+        border-radius: 10px !important;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.88);
+    }
+
+    [data-testid="stExpander"] summary:hover {
+        background: var(--jbnu-blue-soft);
+    }
+
+    [data-testid="stAlert"] {
+        border-radius: 9px;
+        border-left-width: 5px !important;
+    }
+
+    [data-testid="stDataFrame"] {
+        border: 1px solid var(--jbnu-border);
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    code {
+        color: var(--jbnu-burgundy) !important;
+        background: var(--jbnu-burgundy-soft) !important;
+        border-radius: 5px;
+        padding: 0.1rem 0.3rem;
+    }
+
+    hr {
+        border-color: rgba(0, 67, 134, 0.12) !important;
+    }
+
+    a {
+        color: var(--jbnu-blue);
+    }
+
+    a:hover {
+        color: var(--jbnu-burgundy);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 query_dir = "queries"
 
 # ============================================================
