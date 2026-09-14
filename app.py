@@ -109,26 +109,27 @@ st.set_page_config(
 
 
 # ============================================================
-# JBNU 디자인 스타일
-# Burgundy: #a6165f / Blue: #004386
-# 기능·문구에는 영향을 주지 않고 화면 스타일만 변경합니다.
+# JBNU UI 디자인
+# 기본색: Burgundy #a6165f / Blue #004386
+# 모든 페이지에서 밝은 배경 + 진한 글씨를 사용해 가독성을 확보합니다.
 # ============================================================
 
 st.markdown(
     """
     <style>
     :root {
-        --jbnu-burgundy: #a6165f;
         --jbnu-blue: #004386;
-        --jbnu-blue-soft: rgba(0, 67, 134, 0.07);
-        --jbnu-burgundy-soft: rgba(166, 22, 95, 0.07);
-        --jbnu-border: rgba(0, 67, 134, 0.16);
+        --jbnu-burgundy: #a6165f;
+        --text-main: #172033;
+        --text-sub: #4b5563;
+        --surface: #ffffff;
+        --surface-soft: #f3f4f6;
+        --border: #d8dee8;
     }
 
-    .stApp {
-        background:
-            linear-gradient(180deg, rgba(0, 67, 134, 0.025) 0%, rgba(255,255,255,0) 230px),
-            #ffffff;
+    html, body, [data-testid="stAppViewContainer"], .stApp {
+        background-color: var(--surface) !important;
+        color: var(--text-main) !important;
     }
 
     .block-container {
@@ -137,13 +138,20 @@ st.markdown(
         padding-bottom: 4rem;
     }
 
+    .stApp p,
+    .stApp li,
+    .stApp label,
+    .stApp [data-testid="stMarkdownContainer"] {
+        color: var(--text-main);
+    }
+
     h1 {
         color: var(--jbnu-blue) !important;
         font-weight: 800 !important;
         letter-spacing: -0.035em;
-        padding-bottom: 0.8rem !important;
-        margin-bottom: 1.1rem !important;
-        border-bottom: 3px solid var(--jbnu-blue);
+        padding-bottom: 0.72rem !important;
+        margin-bottom: 1rem !important;
+        border-bottom: 2px solid var(--jbnu-blue);
         position: relative;
     }
 
@@ -151,8 +159,8 @@ st.markdown(
         content: "";
         position: absolute;
         left: 0;
-        bottom: -3px;
-        width: 110px;
+        bottom: -2px;
+        width: 90px;
         height: 3px;
         background: var(--jbnu-burgundy);
     }
@@ -160,10 +168,10 @@ st.markdown(
     h2 {
         color: var(--jbnu-blue) !important;
         font-weight: 750 !important;
-        letter-spacing: -0.025em;
+        letter-spacing: -0.02em;
         border-left: 5px solid var(--jbnu-burgundy);
-        padding-left: 0.75rem !important;
-        margin-top: 2rem !important;
+        padding-left: 0.72rem !important;
+        margin-top: 1.8rem !important;
     }
 
     h3 {
@@ -171,138 +179,184 @@ st.markdown(
         font-weight: 700 !important;
     }
 
-    [data-testid="stCaptionContainer"] {
-        color: #5d6874;
-    }
-
-    /* 메인 페이지 소개 문구 */
-    .page-intro {
-        color: #222222 !important;
-        font-size: 0.95rem;
-        margin-top: -0.3rem;
-        margin-bottom: 1.4rem;
+    [data-testid="stCaptionContainer"],
+    [data-testid="stCaptionContainer"] p {
+        color: var(--text-sub) !important;
     }
 
     [data-testid="stSidebar"] {
-        background:
-            linear-gradient(180deg, rgba(0, 67, 134, 0.08) 0%, rgba(166, 22, 95, 0.035) 100%),
-            #fbfcfe;
-        border-right: 1px solid var(--jbnu-border);
+        background-color: #f2f5f9 !important;
+        border-right: 1px solid var(--border);
+    }
+
+    [data-testid="stSidebar"] * {
+        color: var(--text-main) !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
+        color: var(--jbnu-blue) !important;
+        font-weight: 800 !important;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label {
-        border-radius: 9px;
-        padding: 0.38rem 0.55rem;
-        transition: background-color 0.15s ease, color 0.15s ease;
+        padding: 0.45rem 0.55rem;
+        margin: 0.08rem 0;
+        border-radius: 8px;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background: var(--jbnu-blue-soft);
+        background-color: #e8eef6 !important;
     }
 
-    input[type="radio"],
-    input[type="checkbox"] {
-        accent-color: var(--jbnu-burgundy);
+    [data-testid="stWidgetLabel"] p {
+        color: var(--text-main) !important;
+        font-weight: 650 !important;
     }
 
-    .stButton > button {
-        background: var(--jbnu-blue) !important;
-        color: white !important;
-        border: 1px solid var(--jbnu-blue) !important;
-        border-radius: 9px !important;
-        font-weight: 700 !important;
-        min-height: 2.9rem;
-        transition: all 0.15s ease;
-        box-shadow: 0 2px 8px rgba(0, 67, 134, 0.14);
+    [data-testid="stCheckbox"] p {
+        color: var(--text-main) !important;
     }
 
-    .stButton > button:hover {
-        background: var(--jbnu-burgundy) !important;
-        border-color: var(--jbnu-burgundy) !important;
-        box-shadow: 0 4px 12px rgba(166, 22, 95, 0.20);
-        transform: translateY(-1px);
-    }
-
-    /* 입력박스 배경 */
     div[data-baseweb="input"] > div,
     div[data-baseweb="textarea"] > div,
     [data-testid="stNumberInput"] > div {
-        background-color: #f4f5f7 !important;
+        background-color: var(--surface-soft) !important;
+        border: 1px solid #cbd3df !important;
         border-radius: 8px !important;
     }
 
-    /* 입력되는 실제 글자 */
     div[data-baseweb="input"] input,
     div[data-baseweb="textarea"] textarea,
     [data-testid="stNumberInput"] input {
-        background-color: #f4f5f7 !important;
+        background-color: var(--surface-soft) !important;
         color: #111111 !important;
         -webkit-text-fill-color: #111111 !important;
+        caret-color: #111111 !important;
     }
 
-    /* placeholder 글자 */
     div[data-baseweb="input"] input::placeholder,
     div[data-baseweb="textarea"] textarea::placeholder {
         color: #6b7280 !important;
+        -webkit-text-fill-color: #6b7280 !important;
         opacity: 1 !important;
     }
 
-    /* 숫자 입력 +/- 버튼 영역 */
-    [data-testid="stNumberInput"] button {
-        background-color: #f4f5f7 !important;
-        color: #111111 !important;
-    }
-
     div[data-baseweb="input"] > div:focus-within,
-    div[data-baseweb="textarea"] > div:focus-within {
+    div[data-baseweb="textarea"] > div:focus-within,
+    [data-testid="stNumberInput"] > div:focus-within {
         border-color: var(--jbnu-blue) !important;
         box-shadow: 0 0 0 1px var(--jbnu-blue) !important;
     }
 
+    [data-testid="stNumberInput"] button {
+        background-color: #e7eaf0 !important;
+        color: #111111 !important;
+        border-color: #cbd3df !important;
+    }
+
+    [data-testid="stNumberInput"] button svg {
+        fill: #111111 !important;
+        color: #111111 !important;
+    }
+
+    [data-testid="stCheckbox"] label {
+        color: var(--text-main) !important;
+    }
+
+    .stButton > button {
+        background-color: var(--jbnu-blue) !important;
+        color: #ffffff !important;
+        border: 1px solid var(--jbnu-blue) !important;
+        border-radius: 8px !important;
+        font-weight: 750 !important;
+        min-height: 2.9rem;
+        box-shadow: none !important;
+    }
+
+    .stButton > button p {
+        color: #ffffff !important;
+    }
+
+    .stButton > button:hover {
+        background-color: var(--jbnu-burgundy) !important;
+        border-color: var(--jbnu-burgundy) !important;
+        color: #ffffff !important;
+    }
+
     [data-testid="stExpander"] {
-        border: 1px solid var(--jbnu-border) !important;
-        border-radius: 10px !important;
+        background-color: #ffffff !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 9px !important;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.88);
+    }
+
+    [data-testid="stExpander"] summary {
+        background-color: #f8fafc !important;
+        color: var(--text-main) !important;
     }
 
     [data-testid="stExpander"] summary:hover {
-        background: var(--jbnu-blue-soft);
+        background-color: #eef3f8 !important;
+    }
+
+    [data-testid="stExpander"] summary p,
+    [data-testid="stExpander"] div {
+        color: var(--text-main);
     }
 
     [data-testid="stAlert"] {
-        border-radius: 9px;
-        border-left-width: 5px !important;
+        border-radius: 8px !important;
+        color: var(--text-main) !important;
+    }
+
+    [data-testid="stAlert"] p {
+        color: var(--text-main) !important;
     }
 
     [data-testid="stDataFrame"] {
-        border: 1px solid var(--jbnu-border);
-        border-radius: 9px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
         overflow: hidden;
+        background-color: #ffffff !important;
     }
 
     code {
-        color: var(--jbnu-burgundy) !important;
-        background: var(--jbnu-burgundy-soft) !important;
+        color: #7f1249 !important;
+        background-color: #f8eaf1 !important;
+        border: 1px solid #edd1df;
         border-radius: 5px;
-        padding: 0.1rem 0.3rem;
-    }
-
-    hr {
-        border-color: rgba(0, 67, 134, 0.12) !important;
+        padding: 0.08rem 0.3rem;
     }
 
     a {
-        color: var(--jbnu-blue);
+        color: var(--jbnu-blue) !important;
     }
 
     a:hover {
-        color: var(--jbnu-burgundy);
+        color: var(--jbnu-burgundy) !important;
+    }
+
+    hr {
+        border-color: #dfe5ed !important;
+    }
+
+    @media (max-width: 768px) {
+        .block-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 1.3rem;
+        }
+
+        h1 {
+            font-size: 1.8rem !important;
+        }
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
+
+
 
 query_dir = "queries"
 
@@ -365,9 +419,8 @@ if menu == "UN SDG란?":
 
 elif menu == "연구성과 SDG 매칭 시스템":
     st.title("🌍 JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템")
-    st.markdown(
-        '<p class="page-intro">논문 제목·초록·저자키워드를 입력하여 SDG 관련 연구성과로 집계될 수 있는지 점검해보세요.</p>',
-        unsafe_allow_html=True,
+    st.caption(
+        "논문 제목·초록·저자키워드를 입력하여 SDG 관련 연구성과로 집계될 수 있는지 점검해보세요."
     )
 
     # --------------------------------------------------------
