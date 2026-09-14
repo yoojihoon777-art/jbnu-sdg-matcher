@@ -184,8 +184,8 @@ st.markdown(
     }
 
     .jbnu-main-title img {
-        width: 65px;
-        height: 65px;
+        width: 46px;
+        height: 46px;
         object-fit: contain;
         flex: 0 0 auto;
     }
@@ -409,6 +409,11 @@ query_dir = "queries"
 # 좌측 메뉴
 # 최초 접속 시 기존 분석 화면이 보이도록 index=1 설정
 # ============================================================
+
+st.sidebar.markdown(
+    "<div style='font-size:1.35rem; font-weight:800; color:#004386; margin-bottom:0.6rem;'>매칭 시스템</div>",
+    unsafe_allow_html=True,
+)
 
 menu = st.sidebar.radio(
     "메뉴",
