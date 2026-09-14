@@ -175,21 +175,12 @@ st.markdown(
         color: #5d6874;
     }
 
-    /* 입력항목 라벨: 논문 제목, 초록, 저자키워드 개수 등 */
-    [data-testid="stWidgetLabel"] p {
-        color: #303846 !important;
-        font-weight: 600 !important;
-    }
-
-    /* 체크박스 글자 */
-    [data-testid="stCheckbox"] p {
-        color: #303846 !important;
-    }
-
-    /* 좌측 메뉴 글자 */
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] label p {
-        color: #303846 !important;
+    /* 메인 페이지 소개 문구 */
+    .page-intro {
+        color: #222222 !important;
+        font-size: 0.95rem;
+        margin-top: -0.3rem;
+        margin-bottom: 1.4rem;
     }
 
     [data-testid="stSidebar"] {
@@ -232,10 +223,34 @@ st.markdown(
         transform: translateY(-1px);
     }
 
+    /* 입력박스 배경 */
     div[data-baseweb="input"] > div,
     div[data-baseweb="textarea"] > div,
-    [data-testid="stNumberInput"] input {
+    [data-testid="stNumberInput"] > div {
+        background-color: #f4f5f7 !important;
         border-radius: 8px !important;
+    }
+
+    /* 입력되는 실제 글자 */
+    div[data-baseweb="input"] input,
+    div[data-baseweb="textarea"] textarea,
+    [data-testid="stNumberInput"] input {
+        background-color: #f4f5f7 !important;
+        color: #111111 !important;
+        -webkit-text-fill-color: #111111 !important;
+    }
+
+    /* placeholder 글자 */
+    div[data-baseweb="input"] input::placeholder,
+    div[data-baseweb="textarea"] textarea::placeholder {
+        color: #6b7280 !important;
+        opacity: 1 !important;
+    }
+
+    /* 숫자 입력 +/- 버튼 영역 */
+    [data-testid="stNumberInput"] button {
+        background-color: #f4f5f7 !important;
+        color: #111111 !important;
     }
 
     div[data-baseweb="input"] > div:focus-within,
@@ -350,8 +365,9 @@ if menu == "UN SDG란?":
 
 elif menu == "연구성과 SDG 매칭 시스템":
     st.title("🌍 JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템")
-    st.caption(
-        "논문 제목·초록·저자키워드를 입력하여 SDG 관련 연구성과로 집계될 수 있는지 점검해보세요."
+    st.markdown(
+        '<p class="page-intro">논문 제목·초록·저자키워드를 입력하여 SDG 관련 연구성과로 집계될 수 있는지 점검해보세요.</p>',
+        unsafe_allow_html=True,
     )
 
     # --------------------------------------------------------
