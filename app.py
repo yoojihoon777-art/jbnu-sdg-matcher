@@ -175,6 +175,23 @@ st.markdown(
         color: #5d6874;
     }
 
+    /* 입력항목 라벨: 논문 제목, 초록, 저자키워드 개수 등 */
+    [data-testid="stWidgetLabel"] p {
+        color: #303846 !important;
+        font-weight: 600 !important;
+    }
+
+    /* 체크박스 글자 */
+    [data-testid="stCheckbox"] p {
+        color: #303846 !important;
+    }
+
+    /* 좌측 메뉴 글자 */
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] label p {
+        color: #303846 !important;
+    }
+
     [data-testid="stSidebar"] {
         background:
             linear-gradient(180deg, rgba(0, 67, 134, 0.08) 0%, rgba(166, 22, 95, 0.035) 100%),
