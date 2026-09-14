@@ -218,8 +218,17 @@ st.markdown(
         border-right: 1px solid var(--border);
     }
 
-    [data-testid="stSidebar"] * {
+    /* 사이드바 일반 텍스트 */
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] li {
         color: var(--text-main) !important;
+    }
+
+    /* 사이드바 상단 브랜드 제목: 메인 타이틀과 동일한 파랑 */
+    [data-testid="stSidebar"] .jbnu-sidebar-title {
+        color: #004386 !important;
+        font-weight: 800 !important;
     }
 
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
@@ -424,8 +433,7 @@ if sidebar_logo_uri:
         ">
             <img src="{sidebar_logo_uri}" alt="전북대학교 로고"
                  style="width:28px; height:28px; object-fit:contain; flex:0 0 auto;">
-            <span style="
-                color:#004386 !important;
+            <span class="jbnu-sidebar-title" style="
                 font-size:0.98rem;
                 font-weight:800;
                 line-height:1;
@@ -438,8 +446,7 @@ if sidebar_logo_uri:
 else:
     st.sidebar.markdown(
         """
-        <div style="
-            color:#004386 !important;
+        <div class="jbnu-sidebar-title" style="
             font-size:0.98rem;
             font-weight:800;
             margin-bottom:0.65rem;
