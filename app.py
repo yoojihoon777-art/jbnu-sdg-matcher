@@ -107,12 +107,135 @@ st.set_page_config(
     layout="wide",
 )
 
+# ============================================================
+# JBNU 컬러 테마
+# 버건디: #a6165f / 파랑: #004386
+# ============================================================
+
+st.markdown(
+    """
+    <style>
+    /* 전체 제목: 파랑 + 버건디 포인트 */
+    h1 {
+        color: #004386;
+        letter-spacing: -0.02em;
+        border-bottom: 4px solid #a6165f;
+        padding-bottom: 0.45rem;
+        margin-bottom: 1rem;
+    }
+
+    /* 섹션 제목 */
+    h2 {
+        color: #004386;
+        border-left: 5px solid #a6165f;
+        padding-left: 0.65rem;
+        margin-top: 1.6rem;
+    }
+
+    h3 {
+        color: #004386;
+    }
+
+    /* 좌측 메뉴 */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, rgba(0, 67, 134, 0.06) 0%, rgba(166, 22, 95, 0.03) 100%);
+        border-right: 1px solid rgba(0, 67, 134, 0.18);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label {
+        border-radius: 0.55rem;
+        padding: 0.35rem 0.45rem;
+        transition: background-color 0.15s ease;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+        background-color: rgba(0, 67, 134, 0.08);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
+        background-color: rgba(166, 22, 95, 0.09);
+        box-shadow: inset 4px 0 0 #a6165f;
+        font-weight: 700;
+    }
+
+    /* 분석 시작 버튼 */
+    div.stButton > button[kind="primary"] {
+        background-color: #004386;
+        border-color: #004386;
+        color: #ffffff;
+        font-weight: 700;
+        border-radius: 0.55rem;
+    }
+
+    div.stButton > button[kind="primary"]:hover {
+        background-color: #a6165f;
+        border-color: #a6165f;
+        color: #ffffff;
+    }
+
+    /* 상세근거/가이드라인 expander */
+    [data-testid="stExpander"] {
+        border: 1px solid rgba(0, 67, 134, 0.18);
+        border-radius: 0.6rem;
+        overflow: hidden;
+    }
+
+    [data-testid="stExpander"] summary:hover {
+        color: #a6165f;
+    }
+
+    /* 입력창 포커스 */
+    [data-testid="stTextArea"] textarea:focus,
+    [data-testid="stTextInput"] input:focus,
+    [data-testid="stNumberInput"] input:focus {
+        border-color: #004386 !important;
+        box-shadow: 0 0 0 1px #004386 !important;
+    }
+
+    /* 사이드바 브랜드 박스 */
+    .jbnu-sidebar-brand {
+        margin: 0.2rem 0 1.1rem 0;
+        padding: 0.8rem 0.85rem;
+        background: #ffffff;
+        border-top: 4px solid #004386;
+        border-bottom: 4px solid #a6165f;
+        border-radius: 0.45rem;
+        box-shadow: 0 2px 8px rgba(0, 67, 134, 0.07);
+    }
+
+    .jbnu-sidebar-brand .brand-main {
+        color: #004386;
+        font-weight: 800;
+        font-size: 1rem;
+        letter-spacing: 0.01em;
+    }
+
+    .jbnu-sidebar-brand .brand-sub {
+        color: #666666;
+        font-size: 0.78rem;
+        margin-top: 0.15rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 query_dir = "queries"
 
 # ============================================================
 # 좌측 메뉴
 # 최초 접속 시 기존 분석 화면이 보이도록 index=1 설정
 # ============================================================
+
+st.sidebar.markdown(
+    """
+    <div class="jbnu-sidebar-brand">
+        <div class="brand-main">JBNU SDGs</div>
+        <div class="brand-sub">Research Matching System</div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 menu = st.sidebar.radio(
     "메뉴",
@@ -150,14 +273,14 @@ if menu == "UN SDG란?":
 
     st.subheader("3. SDGs와 대학 연구")
     st.write(
-        "대학의 연구성과는 빈곤, 보건, 교육, 에너지, 산업, 불평등, 기후변화 등 "
-        "다양한 지속가능발전 의제와 연결될 수 있습니다. "
-        "Elsevier/Scopus는 SDG 검색식을 활용하여 논문의 제목·초록·키워드에 따라 "
+        "대학의 연구성과는 빈곤, 보건, 교육, 에너지, 산업, 불평등, 기후변화, 생태계 등 "
+        "다양한 지속가능발전 과제의 해결과 연결될 수 있습니다. "
+        "Elsevier/Scopus 등에서는 논문의 제목·초록·키워드와 SDG별 검색식을 활용하여 "
         "연구성과를 SDG별로 분류하고 있습니다."
     )
 
     st.info(
-        "이 시스템은 연구자의 논문이 어떤 SDG로 분류될 수 있는지 점검하, "
+        "이 시스템은 연구자의 논문이 SDG 검색식과 어떻게 연결되는지를 사전에 확인하여, "
         "SDG 관련 연구성과가 적절히 식별될 수 있도록 지원하기 위한 도구입니다."
     )
 
@@ -169,7 +292,8 @@ if menu == "UN SDG란?":
 elif menu == "연구성과 SDG 매칭 시스템":
     st.title("🌍 JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템")
     st.caption(
-        "논문 제목·초록·저자키워드를 입력하여 SDG 관련 연구성과로 집계될 수 있는지 점검해보세요."
+        "논문 제목·초록·저자키워드를 Elsevier/Scopus SDG Boolean 검색식과 대조하여 "
+        "논문이 어떤 SDG에 해당될 수 있는지 확인합니다."
     )
 
     # --------------------------------------------------------
@@ -389,8 +513,8 @@ elif menu == "연구성과 SDG 매칭 시스템":
 
         st.subheader("4. SDG 포착 가이드라인")
         st.caption(
-            "현재 포착되지 않은 SDG 중, 입력 정보와 가장 가까운 "
-            "경로를 최대 3개까지 보여줍니다. 이를 통해 어떤 검색조건이 충족되지 "
+            "현재 포착되지 않은 SDG에 대해, 논문과 일부 조건이 일치하는 가장 가까운 "
+            "검색경로를 최대 3개까지 보여줍니다. 이를 통해 어떤 검색조건이 충족되지 "
             "않았는지 확인할 수 있습니다."
         )
 
@@ -531,8 +655,8 @@ elif menu == "시스템 이용방법":
     st.subheader("3. 분석 결과 확인")
     st.markdown(
         """
-        - **해당**: 현재 입력정보를 기준으로 SDG 검색조건을 충족한 경우입니다.
-        - **미해당**: 현재 입력정보를 기준으로 SDG 검색조건을 충족하지 못한 경우입니다.
+        - **해당**: 현재 입력정보를 기준으로 해당 SDG 검색조건을 충족한 경우입니다.
+        - **미해당**: 현재 입력정보를 기준으로 해당 SDG 검색조건을 충족하지 못한 경우입니다.
         - **판정 보류**: 필요한 입력정보가 없어 판정을 확정하기 어려운 경우입니다.
         """
     )
@@ -557,8 +681,8 @@ elif menu == "시스템 이용방법":
     )
 
     st.warning(
-        "포착 가이드라인은 실제 연구내용과 관련 없는 특정 단어를 논문에 임의로 추가하도록 권고하는 기능이 아닙니다. "
-        "연구내용에 부합하는 범위 내에서 SDG 연계성을 제고하기 위한 참고자료로 활용하여 주시기 바랍니다."
+        "포착 가이드라인은 특정 단어를 논문에 임의로 추가하도록 권고하는 기능이 아닙니다. "
+        "연구내용에 부합하는 범위에서 현재 검색식과의 연계성을 이해하기 위한 참고자료로 활용해 주세요."
     )
 
     st.subheader("6. 이용 시 유의사항")
