@@ -446,6 +446,126 @@ st.markdown(
         border-color: #004386 !important;
     }
 
+    /* ========================================================
+       자료실 - SDG 카드형 디자인
+       ======================================================== */
+    .sdg-card {
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: #ffffff;
+        margin-bottom: 0.9rem;
+        min-height: 220px;
+    }
+
+    .sdg-card-top {
+        min-height: 150px;
+        padding: 0.9rem 0.9rem 0.75rem 0.9rem;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sdg-card-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+
+    .sdg-card-number {
+        font-size: 2rem;
+        line-height: 1;
+        font-weight: 850;
+        letter-spacing: -0.04em;
+        flex: 0 0 auto;
+    }
+
+    .sdg-card-title {
+        color: #ffffff !important;
+        font-size: 0.86rem;
+        line-height: 1.25;
+        font-weight: 800;
+        word-break: keep-all;
+        padding-top: 0.05rem;
+    }
+
+    .sdg-card-icon {
+        font-size: 2.7rem;
+        line-height: 1;
+        text-align: center;
+        margin-top: 0.55rem;
+        filter: grayscale(1) brightness(0) invert(1);
+    }
+
+    .sdg-card-bottom {
+        background: #ffffff;
+        padding: 0.65rem;
+    }
+
+    .sdg-download-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        width: 100%;
+        min-height: 2.65rem;
+        border-radius: 9px;
+        text-decoration: none !important;
+        font-size: 0.82rem;
+        font-weight: 800;
+        transition: all 0.15s ease;
+        box-sizing: border-box;
+    }
+
+    .sdg-download-link:hover {
+        transform: translateY(-1px);
+        background: #f8fafc !important;
+        text-decoration: none !important;
+    }
+
+    .sdg-resource-quote {
+        min-height: 220px;
+        border-radius: 14px;
+        border: 1px solid #d8e4f0;
+        background:
+            linear-gradient(135deg, rgba(0,67,134,0.06), rgba(166,22,95,0.035)),
+            #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.4rem 1.2rem;
+        text-align: center;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .sdg-resource-quote .quote-main {
+        color: #004386 !important;
+        font-size: 1.05rem;
+        line-height: 1.65;
+        font-weight: 750;
+        word-break: keep-all;
+    }
+
+    .sdg-resource-quote .quote-sub {
+        color: #6b7280 !important;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        margin-top: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+        .sdg-card {
+            min-height: 200px;
+        }
+
+        .sdg-card-top {
+            min-height: 135px;
+        }
+    }
+
     [data-testid="stExpander"] {
         background-color: #ffffff !important;
         border: 1px solid var(--border) !important;
@@ -983,18 +1103,20 @@ elif menu == "시스템 이용방법":
     st.subheader("1. 논문 정보 입력")
     st.markdown(
         """
-        - [논문 제목]을 입력합니다.
-        - [초록]을 입력합니다.
-        - 논문에 등록된 [저자키워드 개수]를 선택한 뒤 각 [키워드]를 입력합니다.
-        - 논문의 Scopus 학문분야가 AGRI(Agricultural and Biological Sciences)에 해당하면 체크합니다.
+        - **논문 제목**을 입력합니다.
+        - **초록**을 입력합니다.
+        - 논문에 등록된 **저자키워드 개수**를 선택한 뒤 각 키워드를 입력합니다.
+        - 논문의 Scopus 학문분야가 **AGRI(Agricultural and Biological Sciences)**에 해당하면 체크합니다.
         """
     )
+
+    st.subheader("2. 분석 시작")
     st.write(
         "입력이 끝나면 **분석 시작** 버튼을 누릅니다. "
         "시스템은 SDG 1~16의 Elsevier/Scopus Boolean 검색식과 입력한 논문 정보를 대조합니다."
     )
 
-    st.subheader("2. 분석 결과 확인")
+    st.subheader("3. 분석 결과 확인")
     st.markdown(
         """
         - **해당**: 현재 입력정보를 기준으로 SDG 검색조건을 충족한 경우입니다.
@@ -1003,7 +1125,7 @@ elif menu == "시스템 이용방법":
         """
     )
 
-    st.subheader("3. SDG별 연구성과 포착 근거")
+    st.subheader("4. SDG별 연구성과 포착 근거")
     st.write(
         "해당 SDG를 펼치면 논문의 어느 위치에서 어떤 검색식 조건이 충족되었는지 확인할 수 있습니다."
     )
@@ -1015,7 +1137,7 @@ elif menu == "시스템 이용방법":
         """
     )
 
-    st.subheader("4. SDG 포착 가이드라인")
+    st.subheader("5. SDG 포착 가이드라인")
     st.write(
         "현재 포착되지 않은 SDG 가운데 논문과 일부 검색조건이 일치하는 경우, "
         "가장 가까운 검색경로를 최대 3개까지 보여줍니다. "
@@ -1027,7 +1149,7 @@ elif menu == "시스템 이용방법":
         "연구내용에 부합하는 범위 내에서 SDG 연계성을 제고하기 위한 참고자료로 활용하여 주시기 바랍니다."
     )
 
-    st.subheader("5. 이용 시 유의사항")
+    st.subheader("6. 이용 시 유의사항")
     st.write(
         "본 시스템은 원본 Boolean 검색식을 활용한 사전 진단 도구입니다. "
         "실제 Scopus의 색인정보, 추가 메타데이터, 언어처리 및 최종 분류 방식에 따라 "
@@ -1040,38 +1162,142 @@ elif menu == "시스템 이용방법":
 # ============================================================
 
 elif menu == "자료실":
-    st.title("📁 자료실")
+    st.title("📁 SDG 검색식 자료실")
     st.write(
-        "Elsvier/SCOPUS가 SDG 연구를 집계할 때 사용하는, "
-        "SDG 1~17 Boolean 검색식 원문을 내려받을 수 있습니다."
+        "17개 UN 지속가능발전목표별 Elsevier/Scopus Boolean 검색식 원문을 확인하고 "
+        "각 파일을 내려받을 수 있습니다."
+    )
+    st.caption(
+        "※ 본 자료는 연구성과 SDG 분류 원리를 이해하고 검색식을 확인하기 위한 참고자료입니다."
     )
 
-    st.subheader("SDG 검색식 다운로드")
+    SDG_COLORS = {
+        1: "#E5243B",
+        2: "#DDA63A",
+        3: "#4C9F38",
+        4: "#C5192D",
+        5: "#FF3A21",
+        6: "#26BDE2",
+        7: "#FCC30B",
+        8: "#A21942",
+        9: "#FD6925",
+        10: "#DD1367",
+        11: "#FD9D24",
+        12: "#BF8B2E",
+        13: "#3F7E44",
+        14: "#0A97D9",
+        15: "#56C02B",
+        16: "#00689D",
+        17: "#19486A",
+    }
 
-    download_cols = st.columns(2)
+    SDG_ICONS = {
+        1: "👨‍👩‍👧‍👦",
+        2: "🍚",
+        3: "❤",
+        4: "📖",
+        5: "⚥",
+        6: "💧",
+        7: "☀",
+        8: "📈",
+        9: "⬡",
+        10: "↔",
+        11: "🏙",
+        12: "∞",
+        13: "🌍",
+        14: "🐟",
+        15: "🌳",
+        16: "🕊",
+        17: "✥",
+    }
 
-    for sdg in range(1, 18):
+    def render_sdg_card(sdg: int):
         query_path = Path(query_dir) / f"SDG{sdg:02d}.txt"
-        col = download_cols[(sdg - 1) % 2]
+        color = SDG_COLORS[sdg]
+        icon = SDG_ICONS[sdg]
+        title = SDG_NAMES[sdg]
 
+        if query_path.exists():
+            encoded = base64.b64encode(query_path.read_bytes()).decode("utf-8")
+            download_html = f"""
+                <a
+                    class="sdg-download-link"
+                    href="data:text/plain;base64,{encoded}"
+                    download="SDG{sdg:02d}.txt"
+                    style="color:{color} !important; border:1px solid {color};"
+                >
+                    ↓ SDG {sdg}.txt 다운로드
+                </a>
+            """
+        else:
+            download_html = f"""
+                <div
+                    class="sdg-download-link"
+                    style="color:#9ca3af !important; border:1px solid #d1d5db;"
+                >
+                    파일 없음
+                </div>
+            """
+
+        st.markdown(
+            f"""
+            <div class="sdg-card">
+                <div class="sdg-card-top" style="background:{color};">
+                    <div class="sdg-card-head">
+                        <div class="sdg-card-number">{sdg}</div>
+                        <div class="sdg-card-title">{title}</div>
+                    </div>
+                    <div class="sdg-card-icon">{icon}</div>
+                </div>
+                <div class="sdg-card-bottom">
+                    {download_html}
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.subheader("17개 지속가능발전목표")
+
+    # 1~5
+    row1 = st.columns(5, gap="small")
+    for col, sdg in zip(row1, range(1, 6)):
         with col:
-            st.markdown(
-                f"**SDG {sdg}. {SDG_NAMES[sdg]}**"
-            )
+            render_sdg_card(sdg)
 
-            if query_path.exists():
-                query_bytes = query_path.read_bytes()
+    # 6~10
+    row2 = st.columns(5, gap="small")
+    for col, sdg in zip(row2, range(6, 11)):
+        with col:
+            render_sdg_card(sdg)
 
-                st.download_button(
-                    label=f"SDG {sdg} 검색식 다운로드",
-                    data=query_bytes,
-                    file_name=f"SDG{sdg:02d}.txt",
-                    mime="text/plain",
-                    key=f"download_sdg_{sdg}",
-                    use_container_width=True,
-                )
-            else:
-                st.warning(
-                    f"SDG{sdg:02d}.txt 파일을 찾을 수 없습니다."
-                )
+    # 11~15
+    row3 = st.columns(5, gap="small")
+    for col, sdg in zip(row3, range(11, 16)):
+        with col:
+            render_sdg_card(sdg)
 
+    # 16~17 + 우측 메시지 영역
+    row4 = st.columns([1, 1, 3], gap="small")
+
+    with row4[0]:
+        render_sdg_card(16)
+
+    with row4[1]:
+        render_sdg_card(17)
+
+    with row4[2]:
+        st.markdown(
+            """
+            <div class="sdg-resource-quote">
+                <div class="quote-main">
+                    “지속가능한 미래를 위한<br>
+                    오늘의 연구가, 더 나은 세상을 만듭니다.”
+                </div>
+                <div class="quote-sub">
+                    JEONBUK NATIONAL UNIVERSITY
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
