@@ -984,15 +984,15 @@ if menu == "UN SDG란?":
             unsafe_allow_html=True,
         )
 
-    st.subheader("2. SDGs와 대학 연구")
+    st.subheader("2. 대학과 SDG 연구")
     st.markdown(
         """
         <div class="sdg-research-box">
             <p>
                 대학의 연구성과는 빈곤, 보건, 교육, 에너지, 산업, 불평등, 기후변화 등
                 다양한 지속가능발전 의제와 연결될 수 있습니다.
-                Elsevier/Scopus는 SDG별 검색식을 활용하여 논문의 제목·초록·키워드 등을
-                바탕으로 연구성과를 SDG별로 분류합니다.
+                Elsevier/SCOPUS는 S논문의 제목·초록·키워드 등을
+                바탕으로 각 연구성과를 SDG별로 분류합니다.
             </p>
         </div>
         """,
