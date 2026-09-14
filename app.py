@@ -427,6 +427,25 @@ st.markdown(
         color: #ffffff !important;
     }
 
+    /* 자료실 다운로드 버튼 */
+    [data-testid="stDownloadButton"] > button {
+        background-color: #ffffff !important;
+        color: #004386 !important;
+        border: 1px solid #b9cbe0 !important;
+        border-radius: 8px !important;
+        font-weight: 700 !important;
+        min-height: 2.7rem;
+    }
+
+    [data-testid="stDownloadButton"] > button p {
+        color: #004386 !important;
+    }
+
+    [data-testid="stDownloadButton"] > button:hover {
+        background-color: #eef4fa !important;
+        border-color: #004386 !important;
+    }
+
     [data-testid="stExpander"] {
         background-color: #ffffff !important;
         border: 1px solid var(--border) !important;
@@ -554,6 +573,7 @@ menu = st.sidebar.radio(
         "UN SDG란?",
         "연구성과 SDG 매칭 시스템",
         "시스템 이용방법",
+        "자료실",
     ],
     index=1,
 )
@@ -1015,3 +1035,49 @@ elif menu == "시스템 이용방법":
         "실제 Scopus의 색인정보, 추가 메타데이터, 언어처리 및 최종 분류 방식에 따라 "
         "실제 SDG 분류 결과와 차이가 발생할 수 있습니다."
     )
+
+
+# ============================================================
+# 4) 자료실
+# ============================================================
+
+elif menu == "자료실":
+    st.title("📁 자료실")
+    st.write(
+        "연구성과 SDG 매칭 시스템에서 참고하는 "
+        "SDG 1~17 Boolean 검색식 원문을 내려받을 수 있습니다."
+    )
+
+    st.caption(
+        "※ 각 파일은 Elsevier/Scopus SDG 검색식 확인 및 연구성과 분류 참고용입니다."
+    )
+
+    st.subheader("SDG 검색식 다운로드")
+
+    download_cols = st.columns(2)
+
+    for sdg in range(1, 18):
+        query_path = Path(query_dir) / f"SDG{sdg:02d}.txt"
+        col = download_cols[(sdg - 1) % 2]
+
+        with col:
+            st.markdown(
+                f"**SDG {sdg}. {SDG_NAMES[sdg]}**"
+            )
+
+            if query_path.exists():
+                query_bytes = query_path.read_bytes()
+
+                st.download_button(
+                    label=f"SDG {sdg} 검색식 다운로드",
+                    data=query_bytes,
+                    file_name=f"SDG{sdg:02d}.txt",
+                    mime="text/plain",
+                    key=f"download_sdg_{sdg}",
+                    use_container_width=True,
+                )
+            else:
+                st.warning(
+                    f"SDG{sdg:02d}.txt 파일을 찾을 수 없습니다."
+                )
+
