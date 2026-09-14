@@ -184,8 +184,8 @@ st.markdown(
     }
 
     .jbnu-main-title img {
-        width: 52px;
-        height: 52px;
+        width: 65px;
+        height: 65px;
         object-fit: contain;
         flex: 0 0 auto;
     }
