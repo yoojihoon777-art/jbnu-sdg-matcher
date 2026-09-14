@@ -425,7 +425,7 @@ if sidebar_logo_uri:
             <img src="{sidebar_logo_uri}" alt="전북대학교 로고"
                  style="width:28px; height:28px; object-fit:contain; flex:0 0 auto;">
             <span style="
-                color:#004386;
+                color:#004386 !important;
                 font-size:0.98rem;
                 font-weight:800;
                 line-height:1;
@@ -439,7 +439,7 @@ else:
     st.sidebar.markdown(
         """
         <div style="
-            color:#004386;
+            color:#004386 !important;
             font-size:0.98rem;
             font-weight:800;
             margin-bottom:0.65rem;
