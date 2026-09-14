@@ -412,6 +412,32 @@ st.markdown(
         color: var(--text-main) !important;
     }
 
+    /* AGRI 체크박스: 미선택 상태를 흰색으로 강제 */
+    [data-testid="stCheckbox"] label[data-baseweb="checkbox"] > div:first-child,
+    [data-testid="stCheckbox"] label[data-baseweb="checkbox"] span > div,
+    [data-testid="stCheckbox"] input[type="checkbox"] + div {
+        background-color: #ffffff !important;
+        border-color: #64748b !important;
+        box-shadow: inset 0 0 0 1.5px #64748b !important;
+    }
+
+    /* 선택 상태는 JBNU 파랑 */
+    [data-testid="stCheckbox"] label[data-baseweb="checkbox"]:has(input:checked) > div:first-child,
+    [data-testid="stCheckbox"] label[data-baseweb="checkbox"]:has(input:checked) span > div,
+    [data-testid="stCheckbox"] input[type="checkbox"]:checked + div {
+        background-color: #004386 !important;
+        border-color: #004386 !important;
+        box-shadow: inset 0 0 0 1.5px #004386 !important;
+    }
+
+    /* 체크 표시 흰색 */
+    [data-testid="stCheckbox"] input[type="checkbox"]:checked + div svg,
+    [data-testid="stCheckbox"] label[data-baseweb="checkbox"]:has(input:checked) svg {
+        color: #ffffff !important;
+        fill: #ffffff !important;
+        stroke: #ffffff !important;
+    }
+
     .stButton > button {
         background-color: var(--jbnu-blue) !important;
         color: #ffffff !important;
