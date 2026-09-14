@@ -410,10 +410,46 @@ query_dir = "queries"
 # 최초 접속 시 기존 분석 화면이 보이도록 index=1 설정
 # ============================================================
 
-st.sidebar.markdown(
-    "<div style='font-size:1.35rem; font-weight:800; color:#004386; margin-bottom:0.6rem;'>JBNU 연구성과 SDGs 매칭 시스템</div>",
-    unsafe_allow_html=True,
-)
+sidebar_logo_uri = get_logo_data_uri("logo.png")
+
+if sidebar_logo_uri:
+    st.sidebar.markdown(
+        f"""
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:0.45rem;
+            margin-bottom:0.65rem;
+            white-space:nowrap;
+        ">
+            <img src="{sidebar_logo_uri}" alt="전북대학교 로고"
+                 style="width:28px; height:28px; object-fit:contain; flex:0 0 auto;">
+            <span style="
+                color:#004386;
+                font-size:0.98rem;
+                font-weight:800;
+                line-height:1;
+                white-space:nowrap;
+            ">JBNU 연구성과 SDGs 매칭 시스템</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+else:
+    st.sidebar.markdown(
+        """
+        <div style="
+            color:#004386;
+            font-size:0.98rem;
+            font-weight:800;
+            margin-bottom:0.65rem;
+            white-space:nowrap;
+        ">
+            JBNU 연구성과 SDGs 매칭 시스템
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 menu = st.sidebar.radio(
     "메뉴",
