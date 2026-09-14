@@ -234,16 +234,64 @@ st.markdown(
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
         color: var(--jbnu-blue) !important;
         font-weight: 800 !important;
+        font-size: 0.88rem !important;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.35rem !important;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] {
+        display: flex;
+        flex-direction: column;
+        gap: 0.42rem;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label {
-        padding: 0.45rem 0.55rem;
-        margin: 0.08rem 0;
-        border-radius: 8px;
+        background: #ffffff !important;
+        border: 1px solid #d8e1ec !important;
+        padding: 0.72rem 0.78rem !important;
+        margin: 0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        transition: all 0.16s ease;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label p {
+        color: #22324a !important;
+        font-weight: 650 !important;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background-color: #e8eef6 !important;
+        background: #ffffff !important;
+        border-color: #bfd0e5 !important;
+        box-shadow: 0 8px 18px rgba(0, 67, 134, 0.08);
+        transform: translateX(2px);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
+        background: linear-gradient(
+            90deg,
+            rgba(0, 67, 134, 0.09) 0%,
+            rgba(166, 22, 95, 0.05) 100%
+        ) !important;
+        border-color: #004386 !important;
+        box-shadow: 0 10px 22px rgba(0, 67, 134, 0.12);
+        position: relative;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked)::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 9px;
+        bottom: 9px;
+        width: 4px;
+        border-radius: 0 4px 4px 0;
+        background: #a6165f;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) p {
+        color: #004386 !important;
+        font-weight: 800 !important;
     }
 
     [data-testid="stWidgetLabel"] p {
