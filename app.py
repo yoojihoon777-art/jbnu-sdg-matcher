@@ -1059,23 +1059,6 @@ elif menu == "연구성과 SDG 매칭 시스템":
             "AGRI(Agricultural and Biological Sciences)에 해당하면 체크하세요."
         ),
     )
-    /* AGRI 체크박스: 미선택 상태는 흰색 */
-[data-testid="stCheckbox"] input[type="checkbox"] + div {
-    background-color: #ffffff !important;
-    border: 1.5px solid #64748b !important;
-    box-shadow: none !important;
-}
-
-/* 체크했을 때는 JBNU 파랑으로 표시 */
-[data-testid="stCheckbox"] input[type="checkbox"]:checked + div {
-    background-color: #004386 !important;
-    border-color: #004386 !important;
-}
-
-[data-testid="stCheckbox"] input[type="checkbox"]:checked + div svg {
-    color: #ffffff !important;
-    fill: #ffffff !important;
-}
 
     analyze = st.button(
         "분석 시작",
@@ -1514,5 +1497,3 @@ elif menu == "자료실":
 
     with row4[1]:
         render_sdg_resource_card(17)
-
-
