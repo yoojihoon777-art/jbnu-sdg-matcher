@@ -411,7 +411,7 @@ query_dir = "queries"
 # ============================================================
 
 st.sidebar.markdown(
-    "<div style='font-size:1.35rem; font-weight:800; color:#004386; margin-bottom:0.6rem;'>매칭 시스템</div>",
+    "<div style='font-size:1.35rem; font-weight:800; color:#004386; margin-bottom:0.6rem;'>JBNU 연구성과 SDGs 매칭 시스템</div>",
     unsafe_allow_html=True,
 )
 
