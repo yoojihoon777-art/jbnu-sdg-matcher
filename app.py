@@ -928,9 +928,8 @@ if menu == "UN SDG란?":
             <div class="intro-title">Sustainable Development Goals</div>
             <p class="intro-text">
                 지속가능발전목표(Sustainable Development Goals, SDGs)는
-                2015년 UN 회원국이 채택한 「2030 지속가능발전 의제」의 핵심 목표입니다.
-                2030년까지 국제사회가 공동으로 해결해야 할 빈곤, 보건, 교육, 에너지,
-                불평등, 기후변화 등 사회·경제·환경 분야의 17개 목표로 구성됩니다.
+                2015년 UN 회원국이 채택한 「2030 지속가능발전 의제」의 핵심 목표로,
+                2030년까지 국제사회가 공동으로 해결해야 사회·경제·환경 분야의 17개 목표로 구성됩니다.
             </p>
         </div>
         """,
