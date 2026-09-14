@@ -938,9 +938,6 @@ if menu == "UN SDG란?":
     )
 
     st.subheader("2. 17개 지속가능발전목표")
-    st.caption(
-        "각 목표의 공식 아이콘을 통해 17개 지속가능발전목표를 한눈에 확인할 수 있습니다."
-    )
 
     def render_intro_goal(sdg: int):
         logo_uri = get_sdg_logo_data_uri(sdg)
