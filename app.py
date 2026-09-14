@@ -991,7 +991,7 @@ if menu == "UN SDG란?":
             <p>
                 대학의 연구성과는 빈곤, 보건, 교육, 에너지, 산업, 불평등, 기후변화 등
                 다양한 지속가능발전 의제와 연결될 수 있습니다.
-                Elsevier/SCOPUS는 S논문의 제목·초록·키워드 등을
+                Elsevier/SCOPUS는 논문의 제목·초록·키워드 등을
                 바탕으로 각 연구성과를 SDG별로 분류합니다.
             </p>
         </div>
@@ -1069,7 +1069,7 @@ elif menu == "연구성과 SDG 매칭 시스템":
     is_agri = st.checkbox(
         "농업 관련 학문분야(AGRI)에 해당",
         help=(
-            "논문의 Scopus 학문분야가 "
+            "논문의 SCOPUS 학문분야가 "
             "AGRI(Agricultural and Biological Sciences)에 해당하면 체크하세요."
         ),
     )
@@ -1357,7 +1357,7 @@ elif menu == "연구성과 SDG 매칭 시스템":
 
         st.caption(
             "※ 본 도구는 원본 Boolean 검색식 기반의 사전 진단 도구입니다. "
-            "실제 Scopus 색인·언어처리 및 최종 SDG 분류 결과와 "
+            "실제 SCOPUS 색인·언어처리 및 최종 SDG 분류 결과와 "
             "차이가 있을 수 있습니다."
         )
 
@@ -1375,14 +1375,14 @@ elif menu == "시스템 이용방법":
         - **논문 제목**을 입력합니다.
         - **초록**을 입력합니다.
         - 논문에 등록된 **저자키워드 개수**를 선택한 뒤 각 키워드를 입력합니다.
-        - 논문의 Scopus 학문분야가 **AGRI(Agricultural and Biological Sciences)**에 해당하면 체크합니다.
+        - 논문의 SCOPUS 학문분야가 **AGRI(Agricultural and Biological Sciences)**에 해당하면 체크합니다.
         """
     )
 
     st.subheader("2. 분석 시작")
     st.write(
         "입력이 끝나면 **분석 시작** 버튼을 누릅니다. "
-        "시스템은 SDG 1~16의 Elsevier/Scopus Boolean 검색식과 입력한 논문 정보를 대조합니다."
+        "시스템은 Elsevier/SCOPUS SDG 검색식과 입력한 논문 정보를 대조합니다."
     )
 
     st.subheader("3. 분석 결과 확인")
@@ -1401,7 +1401,7 @@ elif menu == "시스템 이용방법":
     st.markdown(
         """
         - **위치**: 제목, 초록, 저자키워드 등 검색조건이 확인된 위치
-        - **검색식 조건**: Elsevier/Scopus SDG 검색식에서 요구하는 표현 또는 조건
+        - **검색식 조건**: Elsevier/SCOPUS SDG 검색식에서 요구하는 표현 또는 조건
         - **논문 내 일치 표현**: 입력한 논문에서 실제로 검색식 조건과 일치한 표현
         """
     )
@@ -1421,7 +1421,7 @@ elif menu == "시스템 이용방법":
     st.subheader("6. 이용 시 유의사항")
     st.write(
         "본 시스템은 원본 Boolean 검색식을 활용한 사전 진단 도구입니다. "
-        "실제 Scopus의 색인정보, 추가 메타데이터, 언어처리 및 최종 분류 방식에 따라 "
+        "실제 SCOPUS의 색인정보, 추가 메타데이터, 언어처리 및 최종 분류 방식에 따라 "
         "실제 SDG 분류 결과와 차이가 발생할 수 있습니다."
     )
 
@@ -1433,7 +1433,7 @@ elif menu == "시스템 이용방법":
 elif menu == "자료실":
     st.title("📁 SDG 검색식 자료실")
     st.write(
-        "17개 UN 지속가능발전목표별 Elsevier/Scopus Boolean 검색식 원문을 확인하고 "
+        "17개 UN 지속가능발전목표별 Elsevier/SCOPUS Boolean 검색식 원문을 확인하고 "
         "각 파일을 내려받을 수 있습니다."
     )
     st.caption(
