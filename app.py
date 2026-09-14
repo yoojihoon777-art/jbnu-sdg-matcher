@@ -556,6 +556,107 @@ st.markdown(
         margin-top: 0.9rem;
     }
 
+    /* ========================================================
+       UN SDG 소개 페이지
+       ======================================================== */
+    .sdg-intro-box {
+        background:
+            linear-gradient(135deg, rgba(0,67,134,0.07), rgba(166,22,95,0.035)),
+            #ffffff;
+        border: 1px solid #d8e4f0;
+        border-left: 5px solid #004386;
+        border-radius: 14px;
+        padding: 1.25rem 1.35rem;
+        margin: 0.35rem 0 1.45rem 0;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .sdg-intro-box .intro-title {
+        color: #004386 !important;
+        font-size: 1.02rem;
+        font-weight: 800;
+        margin-bottom: 0.45rem;
+    }
+
+    .sdg-intro-box .intro-text {
+        color: #253247 !important;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .sdg-goal-card {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: #ffffff;
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+        margin-bottom: 0.7rem;
+        min-height: 118px;
+    }
+
+    .sdg-goal-card .goal-top {
+        color: #ffffff;
+        min-height: 82px;
+        padding: 0.78rem 0.82rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sdg-goal-card .goal-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.45rem;
+    }
+
+    .sdg-goal-card .goal-number {
+        color: #ffffff !important;
+        font-size: 1.45rem;
+        line-height: 1;
+        font-weight: 850;
+        flex: 0 0 auto;
+    }
+
+    .sdg-goal-card .goal-title {
+        color: #ffffff !important;
+        font-size: 0.79rem;
+        line-height: 1.25;
+        font-weight: 800;
+        word-break: keep-all;
+    }
+
+    .sdg-goal-card .goal-icon {
+        color: #ffffff !important;
+        font-size: 1.65rem;
+        line-height: 1;
+        text-align: right;
+    }
+
+    .sdg-goal-card .goal-bottom {
+        color: #4b5563 !important;
+        background: #ffffff;
+        font-size: 0.69rem;
+        font-weight: 700;
+        padding: 0.42rem 0.7rem;
+        text-align: center;
+        letter-spacing: 0.02em;
+    }
+
+    .sdg-research-box {
+        background: #f7f9fc;
+        border: 1px solid #dce5ef;
+        border-radius: 12px;
+        padding: 1.1rem 1.2rem;
+        margin-top: 0.5rem;
+    }
+
+    .sdg-research-box p {
+        color: #253247 !important;
+        line-height: 1.7;
+        margin: 0;
+    }
+
     @media (max-width: 900px) {
         .sdg-card {
             min-height: 200px;
@@ -707,31 +808,125 @@ if menu == "UN SDG란?":
     st.title("🌍 UN SDG란?")
 
     st.subheader("1. UN 지속가능발전목표(SDGs)")
-    st.write(
-        "지속가능발전목표(Sustainable Development Goals, SDGs)는 "
-        "2015년 UN 회원국이 채택한 「2030 지속가능발전 의제」의 핵심 목표로, "
-        "2030년까지 국제사회가 공동으로 해결해야 할 사회·경제·환경 분야의 17개 목표입니다."
+    st.markdown(
+        """
+        <div class="sdg-intro-box">
+            <div class="intro-title">Sustainable Development Goals</div>
+            <p class="intro-text">
+                지속가능발전목표(Sustainable Development Goals, SDGs)는
+                2015년 UN 회원국이 채택한 「2030 지속가능발전 의제」의 핵심 목표입니다.
+                2030년까지 국제사회가 공동으로 해결해야 할 빈곤, 보건, 교육, 에너지,
+                불평등, 기후변화 등 사회·경제·환경 분야의 17개 목표로 구성됩니다.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     st.subheader("2. 17개 지속가능발전목표")
-    sdg_table = pd.DataFrame(
-        [
-            {"SDG": f"SDG {sdg}", "목표": SDG_NAMES[sdg]}
-            for sdg in range(1, 18)
-        ]
-    )
-    st.dataframe(sdg_table, use_container_width=True, hide_index=True)
+
+    SDG_INTRO_COLORS = {
+        1: "#E5243B",
+        2: "#DDA63A",
+        3: "#4C9F38",
+        4: "#C5192D",
+        5: "#FF3A21",
+        6: "#26BDE2",
+        7: "#FCC30B",
+        8: "#A21942",
+        9: "#FD6925",
+        10: "#DD1367",
+        11: "#FD9D24",
+        12: "#BF8B2E",
+        13: "#3F7E44",
+        14: "#0A97D9",
+        15: "#56C02B",
+        16: "#00689D",
+        17: "#19486A",
+    }
+
+    SDG_INTRO_ICONS = {
+        1: "👨‍👩‍👧‍👦",
+        2: "🍚",
+        3: "❤",
+        4: "📖",
+        5: "⚥",
+        6: "💧",
+        7: "☀",
+        8: "📈",
+        9: "⬡",
+        10: "↔",
+        11: "🏙",
+        12: "∞",
+        13: "🌍",
+        14: "🐟",
+        15: "🌳",
+        16: "🕊",
+        17: "✥",
+    }
+
+    def render_intro_goal(sdg: int):
+        color = SDG_INTRO_COLORS[sdg]
+        icon = SDG_INTRO_ICONS[sdg]
+        title = SDG_NAMES[sdg]
+
+        html = (
+            f'<div class="sdg-goal-card">'
+            f'<div class="goal-top" style="background:{color};">'
+            f'<div class="goal-head">'
+            f'<div class="goal-number">{sdg}</div>'
+            f'<div class="goal-title">{title}</div>'
+            f'</div>'
+            f'<div class="goal-icon">{icon}</div>'
+            f'</div>'
+            f'<div class="goal-bottom">SDG {sdg}</div>'
+            f'</div>'
+        )
+        st.markdown(html, unsafe_allow_html=True)
+
+    # 1~16: 4열
+    for row_start in range(1, 17, 4):
+        cols = st.columns(4, gap="small")
+        for col, sdg in zip(cols, range(row_start, min(row_start + 4, 17))):
+            with col:
+                render_intro_goal(sdg)
+
+    # SDG 17은 마지막 행 왼쪽에 배치
+    last_row = st.columns([1, 3], gap="small")
+    with last_row[0]:
+        render_intro_goal(17)
+
+    with last_row[1]:
+        st.markdown(
+            """
+            <div class="sdg-research-box">
+                <p>
+                    <b style="color:#004386;">17개 목표는 서로 독립적이지 않습니다.</b><br>
+                    하나의 연구성과가 둘 이상의 SDG와 동시에 연결될 수 있으며,
+                    연구 주제와 논문의 표현에 따라 여러 SDG 검색식에 함께 포착될 수 있습니다.
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     st.subheader("3. SDGs와 대학 연구")
-    st.write(
-        "대학의 연구성과는 빈곤, 보건, 교육, 에너지, 산업, 불평등, 기후변화 등 "
-        "다양한 지속가능발전 의제와 연결될 수 있습니다. "
-        "Elsevier/Scopus는 SDG 검색식을 활용하여 논문의 제목·초록·키워드에 따라 "
-        "연구성과를 SDG별로 분류하고 있습니다."
+    st.markdown(
+        """
+        <div class="sdg-research-box">
+            <p>
+                대학의 연구성과는 빈곤, 보건, 교육, 에너지, 산업, 불평등, 기후변화 등
+                다양한 지속가능발전 의제와 연결될 수 있습니다.
+                Elsevier/Scopus는 SDG별 검색식을 활용하여 논문의 제목·초록·키워드 등을
+                바탕으로 연구성과를 SDG별로 분류합니다.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     st.info(
-        "이 시스템은 연구자의 논문이 어떤 SDG로 분류될 수 있는지 점검하, "
+        "이 시스템은 연구자의 논문이 어떤 SDG로 분류될 수 있는지 사전에 점검하고, "
         "SDG 관련 연구성과가 적절히 식별될 수 있도록 지원하기 위한 도구입니다."
     )
 
@@ -1281,4 +1476,14 @@ elif menu == "자료실":
     with row4[1]:
         render_sdg_card(17)
 
-
+    with row4[2]:
+        quote_html = (
+            '<div class="sdg-resource-quote">'
+            '<div class="quote-main">'
+            '“지속가능한 미래를 위한<br>'
+            '오늘의 연구가, 더 나은 세상을 만듭니다.”'
+            '</div>'
+            '<div class="quote-sub">JEONBUK NATIONAL UNIVERSITY</div>'
+            '</div>'
+        )
+        st.markdown(quote_html, unsafe_allow_html=True)
