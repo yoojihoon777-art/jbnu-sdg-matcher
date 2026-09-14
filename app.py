@@ -970,19 +970,6 @@ if menu == "UN SDG란?":
     with last_row[0]:
         render_intro_goal(17)
 
-    with last_row[1]:
-        st.markdown(
-            """
-            <div class="sdg-research-box">
-                <p>
-                    <b style="color:#004386;">17개 목표는 서로 독립적이지 않습니다.</b><br>
-                    하나의 연구성과가 둘 이상의 SDG와 동시에 연결될 수 있으며,
-                    연구 주제와 논문의 표현에 따라 여러 SDG 검색식에 함께 포착될 수 있습니다.
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
 
     st.subheader("2. 대학과 SDG 연구")
     st.markdown(
