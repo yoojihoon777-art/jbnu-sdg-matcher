@@ -1,4 +1,5 @@
 from pathlib import Path
+import base64
 
 import pandas as pd
 import streamlit as st
@@ -58,6 +59,16 @@ GUIDE_STATUS_ICON = {
     "입력 확인 필요": "⚠️",
     "제외조건": "⛔",
 }
+
+
+
+def get_logo_data_uri(path: str = "logo.png"):
+    logo_path = Path(path)
+    if not logo_path.exists():
+        return None
+
+    encoded = base64.b64encode(logo_path.read_bytes()).decode("utf-8")
+    return f"data:image/png;base64,{encoded}"
 
 
 def compact_notes(notes):
@@ -163,6 +174,24 @@ st.markdown(
         width: 90px;
         height: 3px;
         background: var(--jbnu-burgundy);
+    }
+
+    /* 메인 타이틀 안 전북대 로고 */
+    .jbnu-main-title {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+    }
+
+    .jbnu-main-title img {
+        width: 46px;
+        height: 46px;
+        object-fit: contain;
+        flex: 0 0 auto;
+    }
+
+    .jbnu-main-title span {
+        color: var(--jbnu-blue) !important;
     }
 
     h2 {
@@ -434,7 +463,21 @@ if menu == "UN SDG란?":
 # ============================================================
 
 elif menu == "연구성과 SDG 매칭 시스템":
-    st.title("🌍 JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템")
+    logo_uri = get_logo_data_uri("logo.png")
+
+    if logo_uri:
+        st.markdown(
+            f"""
+            <h1 class="jbnu-main-title">
+                <img src="{logo_uri}" alt="전북대학교 로고">
+                <span>JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템</span>
+            </h1>
+            """,
+            unsafe_allow_html=True,
+        )
+    else:
+        st.title("JBNU 연구성과 지속가능발전목표(SDGs) 매칭 시스템")
+        st.caption("※ logo.png 파일을 app.py와 같은 폴더에 두면 제목 왼쪽에 전북대학교 로고가 표시됩니다.")
     st.caption(
         "논문 제목·초록·저자키워드를 입력하여 SDG 관련 연구성과로 집계될 수 있는지 점검해보세요."
     )
