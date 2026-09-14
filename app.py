@@ -1044,12 +1044,8 @@ elif menu == "시스템 이용방법":
 elif menu == "자료실":
     st.title("📁 자료실")
     st.write(
-        "연구성과 SDG 매칭 시스템에서 참고하는 "
+        "Elsvier/SCOPUS가 SDG 연구를 집계할 때 사용하는,"
         "SDG 1~17 Boolean 검색식 원문을 내려받을 수 있습니다."
-    )
-
-    st.caption(
-        "※ 각 파일은 Elsevier/Scopus SDG 검색식 확인 및 연구성과 분류 참고용입니다."
     )
 
     st.subheader("SDG 검색식 다운로드")
