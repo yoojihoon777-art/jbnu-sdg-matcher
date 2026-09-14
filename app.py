@@ -217,28 +217,44 @@ st.markdown(
         color: var(--text-main) !important;
     }
 
-    div[data-baseweb="input"] > div,
-    div[data-baseweb="textarea"] > div,
-    [data-testid="stNumberInput"] > div {
-        background-color: var(--surface-soft) !important;
-        border: 1px solid #cbd3df !important;
-        border-radius: 8px !important;
-    }
-
-    div[data-baseweb="input"] input,
-    div[data-baseweb="textarea"] textarea,
+    /* 제목 / 초록 / 저자키워드 / 숫자 입력칸: 밝은 회색 배경 */
+    [data-testid="stTextArea"] textarea,
+    [data-testid="stTextInput"] input,
     [data-testid="stNumberInput"] input {
-        background-color: var(--surface-soft) !important;
+        background-color: #f2f3f5 !important;
         color: #111111 !important;
         -webkit-text-fill-color: #111111 !important;
         caret-color: #111111 !important;
+        border-radius: 8px !important;
     }
 
-    div[data-baseweb="input"] input::placeholder,
-    div[data-baseweb="textarea"] textarea::placeholder {
+    /* Streamlit/BaseWeb가 입력칸 바깥 div에 어두운 배경을 주는 경우까지 덮어쓰기 */
+    [data-testid="stTextArea"] div[data-baseweb="textarea"],
+    [data-testid="stTextArea"] div[data-baseweb="textarea"] > div,
+    [data-testid="stTextInput"] div[data-baseweb="input"],
+    [data-testid="stTextInput"] div[data-baseweb="input"] > div,
+    [data-testid="stNumberInput"] div[data-baseweb="input"],
+    [data-testid="stNumberInput"] div[data-baseweb="input"] > div {
+        background-color: #f2f3f5 !important;
+        color: #111111 !important;
+        border-color: #cbd3df !important;
+        border-radius: 8px !important;
+    }
+
+    /* placeholder는 중간 회색 */
+    [data-testid="stTextArea"] textarea::placeholder,
+    [data-testid="stTextInput"] input::placeholder,
+    [data-testid="stNumberInput"] input::placeholder {
         color: #6b7280 !important;
         -webkit-text-fill-color: #6b7280 !important;
         opacity: 1 !important;
+    }
+
+    /* 브라우저/Streamlit 다크 입력 스타일 강제 해제 */
+    [data-testid="stTextArea"] textarea,
+    [data-testid="stTextInput"] input,
+    [data-testid="stNumberInput"] input {
+        color-scheme: light !important;
     }
 
     div[data-baseweb="input"] > div:focus-within,
@@ -249,7 +265,7 @@ st.markdown(
     }
 
     [data-testid="stNumberInput"] button {
-        background-color: #e7eaf0 !important;
+        background-color: #e6e8ec !important;
         color: #111111 !important;
         border-color: #cbd3df !important;
     }
