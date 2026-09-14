@@ -1219,43 +1219,38 @@ elif menu == "자료실":
 
         if query_path.exists():
             encoded = base64.b64encode(query_path.read_bytes()).decode("utf-8")
-            download_html = f"""
-                <a
-                    class="sdg-download-link"
-                    href="data:text/plain;base64,{encoded}"
-                    download="SDG{sdg:02d}.txt"
-                    style="color:{color} !important; border:1px solid {color};"
-                >
-                    ↓ SDG {sdg}.txt 다운로드
-                </a>
-            """
+            download_html = (
+                f'<a class="sdg-download-link" '
+                f'href="data:text/plain;base64,{encoded}" '
+                f'download="SDG{sdg:02d}.txt" '
+                f'style="color:{color} !important; border:1px solid {color};">'
+                f'↓ SDG {sdg}.txt 다운로드'
+                f'</a>'
+            )
         else:
-            download_html = f"""
-                <div
-                    class="sdg-download-link"
-                    style="color:#9ca3af !important; border:1px solid #d1d5db;"
-                >
-                    파일 없음
-                </div>
-            """
+            download_html = (
+                '<div class="sdg-download-link" '
+                'style="color:#9ca3af !important; border:1px solid #d1d5db;">'
+                '파일 없음'
+                '</div>'
+            )
 
-        st.markdown(
-            f"""
-            <div class="sdg-card">
-                <div class="sdg-card-top" style="background:{color};">
-                    <div class="sdg-card-head">
-                        <div class="sdg-card-number">{sdg}</div>
-                        <div class="sdg-card-title">{title}</div>
-                    </div>
-                    <div class="sdg-card-icon">{icon}</div>
-                </div>
-                <div class="sdg-card-bottom">
-                    {download_html}
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        # HTML을 들여쓴 멀티라인 문자열로 넣으면 Markdown이 코드블록으로
+        # 해석할 수 있으므로, 줄 앞 공백이 없는 단일 HTML 문자열로 렌더링합니다.
+        card_html = (
+            f'<div class="sdg-card">'
+            f'<div class="sdg-card-top" style="background:{color};">'
+            f'<div class="sdg-card-head">'
+            f'<div class="sdg-card-number">{sdg}</div>'
+            f'<div class="sdg-card-title">{title}</div>'
+            f'</div>'
+            f'<div class="sdg-card-icon">{icon}</div>'
+            f'</div>'
+            f'<div class="sdg-card-bottom">{download_html}</div>'
+            f'</div>'
         )
+
+        st.markdown(card_html, unsafe_allow_html=True)
 
     st.subheader("17개 지속가능발전목표")
 
@@ -1287,17 +1282,13 @@ elif menu == "자료실":
         render_sdg_card(17)
 
     with row4[2]:
-        st.markdown(
-            """
-            <div class="sdg-resource-quote">
-                <div class="quote-main">
-                    “지속가능한 미래를 위한<br>
-                    오늘의 연구가, 더 나은 세상을 만듭니다.”
-                </div>
-                <div class="quote-sub">
-                    JEONBUK NATIONAL UNIVERSITY
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        quote_html = (
+            '<div class="sdg-resource-quote">'
+            '<div class="quote-main">'
+            '“지속가능한 미래를 위한<br>'
+            '오늘의 연구가, 더 나은 세상을 만듭니다.”'
+            '</div>'
+            '<div class="quote-sub">JEONBUK NATIONAL UNIVERSITY</div>'
+            '</div>'
         )
+        st.markdown(quote_html, unsafe_allow_html=True)
