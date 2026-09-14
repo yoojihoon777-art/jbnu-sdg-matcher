@@ -218,6 +218,10 @@ st.markdown(
         border-right: 1px solid var(--border);
     }
 
+    /* ========================================================
+       사이드바 메뉴 - 탭형(모던)
+       ======================================================== */
+
     /* 사이드바 일반 텍스트 */
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] label,
@@ -225,97 +229,106 @@ st.markdown(
         color: var(--text-main) !important;
     }
 
-    /* 사이드바 상단 브랜드 제목: 메인 타이틀과 동일한 파랑 */
+    /* 사이드바 상단 브랜드 제목 */
     [data-testid="stSidebar"] .jbnu-sidebar-title {
         color: #004386 !important;
         font-weight: 800 !important;
     }
 
-    /* 사이드바 '메뉴' 헤더:
-       하위 메뉴 카드와 구분되도록 카드형 배경/테두리를 제거하고
-       작은 섹션 라벨 + 포인트 라인으로 표현 */
+    /* '메뉴' 섹션 헤더 */
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] {
         background: transparent !important;
         border: none !important;
-        border-radius: 0 !important;
-        padding: 0.15rem 0 0.45rem 0 !important;
-        margin: 0.15rem 0 0.55rem 0 !important;
+        padding: 0.2rem 0 0.45rem 0.15rem !important;
+        margin: 0.2rem 0 0.35rem 0 !important;
         box-shadow: none !important;
-        position: relative;
-    }
-
-    [data-testid="stSidebar"] [data-testid="stWidgetLabel"]::after {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 1px;
-        margin-top: 0.5rem;
-        background: linear-gradient(
-            90deg,
-            var(--jbnu-burgundy) 0%,
-            var(--jbnu-blue) 32%,
-            #d8e1ec 32%,
-            #d8e1ec 100%
-        );
     }
 
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
-        color: var(--jbnu-blue) !important;
+        color: #004386 !important;
         font-weight: 800 !important;
-        font-size: 0.78rem !important;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
+        font-size: 0.86rem !important;
+        letter-spacing: 0.04em;
         margin: 0 !important;
     }
 
+    /* 탭 그룹 */
     [data-testid="stSidebar"] div[role="radiogroup"] {
         display: flex;
         flex-direction: column;
-        gap: 0.42rem;
+        gap: 0.18rem;
+        border-left: 2px solid #cbd5e1;
+        padding-left: 0.5rem;
+        margin-top: 0.15rem;
     }
 
+    /* 기본 탭 */
     [data-testid="stSidebar"] div[role="radiogroup"] label {
-        background: #ffffff !important;
-        border: 1px solid #d8e1ec !important;
-        padding: 0.72rem 0.78rem !important;
+        position: relative;
+        display: flex !important;
+        align-items: center !important;
+        width: 100%;
+        min-height: 2.9rem;
+        padding: 0.62rem 0.78rem !important;
         margin: 0 !important;
-        border-radius: 12px !important;
-        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-        transition: all 0.16s ease;
+
+        background: transparent !important;
+        border: none !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+
+        transition:
+            background-color 0.16s ease,
+            color 0.16s ease,
+            transform 0.16s ease;
     }
 
+    /* 기본 라디오 원형 숨김 */
+    [data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {
+        display: none !important;
+    }
+
+    /* 기본 탭 텍스트 */
     [data-testid="stSidebar"] div[role="radiogroup"] label p {
-        color: #22324a !important;
-        font-weight: 650 !important;
+        color: #334155 !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
+        line-height: 1.25;
+        margin: 0 !important;
     }
 
+    /* hover */
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background: #ffffff !important;
-        border-color: #bfd0e5 !important;
-        box-shadow: 0 8px 18px rgba(0, 67, 134, 0.08);
+        background: #eef4fa !important;
         transform: translateX(2px);
     }
 
+    [data-testid="stSidebar"] div[role="radiogroup"] label:hover p {
+        color: #004386 !important;
+    }
+
+    /* 선택된 탭 */
     [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
         background: linear-gradient(
             90deg,
-            rgba(0, 67, 134, 0.09) 0%,
-            rgba(166, 22, 95, 0.05) 100%
+            rgba(0, 67, 134, 0.10) 0%,
+            rgba(0, 67, 134, 0.035) 100%
         ) !important;
-        border-color: #004386 !important;
-        box-shadow: 0 10px 22px rgba(0, 67, 134, 0.12);
-        position: relative;
+        border-radius: 8px !important;
+        transform: translateX(2px);
     }
 
+    /* 선택된 탭 왼쪽 버건디 포인트 바 */
     [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked)::before {
         content: "";
         position: absolute;
-        left: 0;
-        top: 9px;
-        bottom: 9px;
+        left: -0.62rem;
+        top: 0.42rem;
+        bottom: 0.42rem;
         width: 4px;
         border-radius: 0 4px 4px 0;
         background: #a6165f;
+        box-shadow: 0 0 0 1px rgba(166, 22, 95, 0.08);
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) p {
