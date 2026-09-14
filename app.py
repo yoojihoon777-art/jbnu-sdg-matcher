@@ -937,8 +937,6 @@ if menu == "UN SDG란?":
         unsafe_allow_html=True,
     )
 
-    st.subheader("2. 17개 지속가능발전목표")
-
     def render_intro_goal(sdg: int):
         logo_uri = get_sdg_logo_data_uri(sdg)
 
@@ -986,7 +984,7 @@ if menu == "UN SDG란?":
             unsafe_allow_html=True,
         )
 
-    st.subheader("3. SDGs와 대학 연구")
+    st.subheader("2. SDGs와 대학 연구")
     st.markdown(
         """
         <div class="sdg-research-box">
