@@ -1281,14 +1281,4 @@ elif menu == "자료실":
     with row4[1]:
         render_sdg_card(17)
 
-    with row4[2]:
-        quote_html = (
-            '<div class="sdg-resource-quote">'
-            '<div class="quote-main">'
-            '“지속가능한 미래를 위한<br>'
-            '오늘의 연구가, 더 나은 세상을 만듭니다.”'
-            '</div>'
-            '<div class="quote-sub">JEONBUK NATIONAL UNIVERSITY</div>'
-            '</div>'
-        )
-        st.markdown(quote_html, unsafe_allow_html=True)
+
