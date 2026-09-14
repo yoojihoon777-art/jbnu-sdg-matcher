@@ -71,6 +71,11 @@ def get_logo_data_uri(path: str = "logo.png"):
     return f"data:image/png;base64,{encoded}"
 
 
+def get_sdg_logo_data_uri(sdg: int):
+    """SDG 공식 아이콘 파일: logo-1_120x120_png.png ~ logo-17_120x120_png.png"""
+    return get_logo_data_uri(f"logo-{sdg}_120x120_png.png")
+
+
 def compact_notes(notes):
     seen = []
     for note in notes:
@@ -657,6 +662,115 @@ st.markdown(
         margin: 0;
     }
 
+    /* ========================================================
+       SDG 공식 120x120 이미지 기반 카드
+       ======================================================== */
+    .sdg-logo-grid-card {
+        background: #ffffff;
+        border: 1px solid #dce3ec;
+        border-radius: 14px;
+        padding: 0.8rem 0.65rem;
+        margin-bottom: 0.8rem;
+        min-height: 175px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 14px rgba(15, 23, 42, 0.05);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .sdg-logo-grid-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 9px 20px rgba(0, 67, 134, 0.09);
+    }
+
+    .sdg-logo-grid-card img {
+        width: 132px;
+        height: 132px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .sdg-logo-grid-card .sdg-logo-missing {
+        width: 132px;
+        height: 132px;
+        border-radius: 10px;
+        background: #f3f4f6;
+        color: #6b7280 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.78rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .sdg-resource-logo-card {
+        background: #ffffff;
+        border: 1px solid #dce3ec;
+        border-radius: 14px;
+        padding: 0.75rem;
+        margin-bottom: 0.9rem;
+        min-height: 210px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .sdg-resource-logo-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(0, 67, 134, 0.10);
+    }
+
+    .sdg-resource-logo-card img {
+        width: 136px;
+        height: 136px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 0.65rem auto;
+    }
+
+    .sdg-resource-logo-card .sdg-logo-missing {
+        width: 136px;
+        height: 136px;
+        background: #f3f4f6;
+        color: #6b7280 !important;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.78rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .sdg-resource-logo-card .sdg-download-link {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 2.6rem;
+    }
+
+    @media (max-width: 900px) {
+        .sdg-logo-grid-card img,
+        .sdg-logo-grid-card .sdg-logo-missing {
+            width: 110px;
+            height: 110px;
+        }
+
+        .sdg-resource-logo-card img,
+        .sdg-resource-logo-card .sdg-logo-missing {
+            width: 112px;
+            height: 112px;
+        }
+    }
+
     @media (max-width: 900px) {
         .sdg-card {
             min-height: 200px;
@@ -824,65 +938,29 @@ if menu == "UN SDG란?":
     )
 
     st.subheader("2. 17개 지속가능발전목표")
-
-    SDG_INTRO_COLORS = {
-        1: "#E5243B",
-        2: "#DDA63A",
-        3: "#4C9F38",
-        4: "#C5192D",
-        5: "#FF3A21",
-        6: "#26BDE2",
-        7: "#FCC30B",
-        8: "#A21942",
-        9: "#FD6925",
-        10: "#DD1367",
-        11: "#FD9D24",
-        12: "#BF8B2E",
-        13: "#3F7E44",
-        14: "#0A97D9",
-        15: "#56C02B",
-        16: "#00689D",
-        17: "#19486A",
-    }
-
-    SDG_INTRO_ICONS = {
-        1: "👨‍👩‍👧‍👦",
-        2: "🍚",
-        3: "❤",
-        4: "📖",
-        5: "⚥",
-        6: "💧",
-        7: "☀",
-        8: "📈",
-        9: "⬡",
-        10: "↔",
-        11: "🏙",
-        12: "∞",
-        13: "🌍",
-        14: "🐟",
-        15: "🌳",
-        16: "🕊",
-        17: "✥",
-    }
+    st.caption(
+        "각 목표의 공식 아이콘을 통해 17개 지속가능발전목표를 한눈에 확인할 수 있습니다."
+    )
 
     def render_intro_goal(sdg: int):
-        color = SDG_INTRO_COLORS[sdg]
-        icon = SDG_INTRO_ICONS[sdg]
-        title = SDG_NAMES[sdg]
+        logo_uri = get_sdg_logo_data_uri(sdg)
 
-        html = (
-            f'<div class="sdg-goal-card">'
-            f'<div class="goal-top" style="background:{color};">'
-            f'<div class="goal-head">'
-            f'<div class="goal-number">{sdg}</div>'
-            f'<div class="goal-title">{title}</div>'
-            f'</div>'
-            f'<div class="goal-icon">{icon}</div>'
-            f'</div>'
-            f'<div class="goal-bottom">SDG {sdg}</div>'
-            f'</div>'
+        if logo_uri:
+            logo_html = (
+                f'<img src="{logo_uri}" '
+                f'alt="SDG {sdg} {SDG_NAMES[sdg]}">'
+            )
+        else:
+            logo_html = (
+                f'<div class="sdg-logo-missing">'
+                f'logo-{sdg}_120x120_png.png<br>파일 없음'
+                f'</div>'
+            )
+
+        st.markdown(
+            f'<div class="sdg-logo-grid-card">{logo_html}</div>',
+            unsafe_allow_html=True,
         )
-        st.markdown(html, unsafe_allow_html=True)
 
     # 1~16: 4열
     for row_start in range(1, 17, 4):
@@ -891,8 +969,9 @@ if menu == "UN SDG란?":
             with col:
                 render_intro_goal(sdg)
 
-    # SDG 17은 마지막 행 왼쪽에 배치
+    # 마지막 행: SDG 17 + 설명
     last_row = st.columns([1, 3], gap="small")
+
     with last_row[0]:
         render_intro_goal(17)
 
@@ -1366,51 +1445,21 @@ elif menu == "자료실":
         "※ 본 자료는 연구성과 SDG 분류 원리를 이해하고 검색식을 확인하기 위한 참고자료입니다."
     )
 
-    SDG_COLORS = {
-        1: "#E5243B",
-        2: "#DDA63A",
-        3: "#4C9F38",
-        4: "#C5192D",
-        5: "#FF3A21",
-        6: "#26BDE2",
-        7: "#FCC30B",
-        8: "#A21942",
-        9: "#FD6925",
-        10: "#DD1367",
-        11: "#FD9D24",
-        12: "#BF8B2E",
-        13: "#3F7E44",
-        14: "#0A97D9",
-        15: "#56C02B",
-        16: "#00689D",
-        17: "#19486A",
-    }
-
-    SDG_ICONS = {
-        1: "👨‍👩‍👧‍👦",
-        2: "🍚",
-        3: "❤",
-        4: "📖",
-        5: "⚥",
-        6: "💧",
-        7: "☀",
-        8: "📈",
-        9: "⬡",
-        10: "↔",
-        11: "🏙",
-        12: "∞",
-        13: "🌍",
-        14: "🐟",
-        15: "🌳",
-        16: "🕊",
-        17: "✥",
-    }
-
-    def render_sdg_card(sdg: int):
+    def render_sdg_resource_card(sdg: int):
         query_path = Path(query_dir) / f"SDG{sdg:02d}.txt"
-        color = SDG_COLORS[sdg]
-        icon = SDG_ICONS[sdg]
-        title = SDG_NAMES[sdg]
+        logo_uri = get_sdg_logo_data_uri(sdg)
+
+        if logo_uri:
+            logo_html = (
+                f'<img src="{logo_uri}" '
+                f'alt="SDG {sdg} {SDG_NAMES[sdg]}">'
+            )
+        else:
+            logo_html = (
+                f'<div class="sdg-logo-missing">'
+                f'logo-{sdg}_120x120_png.png<br>파일 없음'
+                f'</div>'
+            )
 
         if query_path.exists():
             encoded = base64.b64encode(query_path.read_bytes()).decode("utf-8")
@@ -1418,30 +1467,24 @@ elif menu == "자료실":
                 f'<a class="sdg-download-link" '
                 f'href="data:text/plain;base64,{encoded}" '
                 f'download="SDG{sdg:02d}.txt" '
-                f'style="color:{color} !important; border:1px solid {color};">'
+                f'style="color:#004386 !important; '
+                f'border:1px solid #9eb9d6; background:#ffffff;">'
                 f'↓ SDG {sdg}.txt 다운로드'
                 f'</a>'
             )
         else:
             download_html = (
                 '<div class="sdg-download-link" '
-                'style="color:#9ca3af !important; border:1px solid #d1d5db;">'
-                '파일 없음'
+                'style="color:#9ca3af !important; '
+                'border:1px solid #d1d5db; background:#ffffff;">'
+                '검색식 파일 없음'
                 '</div>'
             )
 
-        # HTML을 들여쓴 멀티라인 문자열로 넣으면 Markdown이 코드블록으로
-        # 해석할 수 있으므로, 줄 앞 공백이 없는 단일 HTML 문자열로 렌더링합니다.
         card_html = (
-            f'<div class="sdg-card">'
-            f'<div class="sdg-card-top" style="background:{color};">'
-            f'<div class="sdg-card-head">'
-            f'<div class="sdg-card-number">{sdg}</div>'
-            f'<div class="sdg-card-title">{title}</div>'
-            f'</div>'
-            f'<div class="sdg-card-icon">{icon}</div>'
-            f'</div>'
-            f'<div class="sdg-card-bottom">{download_html}</div>'
+            f'<div class="sdg-resource-logo-card">'
+            f'{logo_html}'
+            f'{download_html}'
             f'</div>'
         )
 
@@ -1453,28 +1496,28 @@ elif menu == "자료실":
     row1 = st.columns(5, gap="small")
     for col, sdg in zip(row1, range(1, 6)):
         with col:
-            render_sdg_card(sdg)
+            render_sdg_resource_card(sdg)
 
     # 6~10
     row2 = st.columns(5, gap="small")
     for col, sdg in zip(row2, range(6, 11)):
         with col:
-            render_sdg_card(sdg)
+            render_sdg_resource_card(sdg)
 
     # 11~15
     row3 = st.columns(5, gap="small")
     for col, sdg in zip(row3, range(11, 16)):
         with col:
-            render_sdg_card(sdg)
+            render_sdg_resource_card(sdg)
 
-    # 16~17 + 우측 메시지 영역
+    # 16~17 + 메시지
     row4 = st.columns([1, 1, 3], gap="small")
 
     with row4[0]:
-        render_sdg_card(16)
+        render_sdg_resource_card(16)
 
     with row4[1]:
-        render_sdg_card(17)
+        render_sdg_resource_card(17)
 
     with row4[2]:
         quote_html = (
