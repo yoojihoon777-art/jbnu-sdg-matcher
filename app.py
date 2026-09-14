@@ -231,26 +231,40 @@ st.markdown(
         font-weight: 800 !important;
     }
 
-    /* 사이드바 '메뉴' 헤더 */
+    /* 사이드바 '메뉴' 헤더:
+       하위 메뉴 카드와 구분되도록 카드형 배경/테두리를 제거하고
+       작은 섹션 라벨 + 포인트 라인으로 표현 */
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] {
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        padding: 0.15rem 0 0.45rem 0 !important;
+        margin: 0.15rem 0 0.55rem 0 !important;
+        box-shadow: none !important;
+        position: relative;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stWidgetLabel"]::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        margin-top: 0.5rem;
         background: linear-gradient(
             90deg,
-            rgba(0, 67, 134, 0.10) 0%,
-            rgba(166, 22, 95, 0.06) 100%
-        ) !important;
-        border: 1px solid #cbd8e8 !important;
-        border-left: 5px solid var(--jbnu-burgundy) !important;
-        border-radius: 10px !important;
-        padding: 0.58rem 0.72rem !important;
-        margin-bottom: 0.55rem !important;
-        box-shadow: 0 4px 12px rgba(0, 67, 134, 0.06);
+            var(--jbnu-burgundy) 0%,
+            var(--jbnu-blue) 32%,
+            #d8e1ec 32%,
+            #d8e1ec 100%
+        );
     }
 
     [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
         color: var(--jbnu-blue) !important;
-        font-weight: 850 !important;
-        font-size: 0.88rem !important;
-        letter-spacing: 0.08em;
+        font-weight: 800 !important;
+        font-size: 0.78rem !important;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
         margin: 0 !important;
     }
 
